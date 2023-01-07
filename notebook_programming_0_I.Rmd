@@ -14,25 +14,59 @@ fontsize: 12pt
 ```{r include=FALSE}
 knitr::opts_chunk$set(comment=NA)
 ```
-# Introduction to programming
 
-## Organizational aspects
+# Organizational aspects
 
-* __The class will be graded__, but this grade will not be part of the official academic records
+## Class policies
 
-* As a consequence, I will keep __homework shorter than for Programming I and II__, but there will be still some
+* Programming 0 __will be graded__, but this grade will not be part of the official academic records
 
-* For the homework, it is recommended that you __form groups via Blackboard__
+* There will be __homework__ in both P0 and PI; attendance will be graded only in P0; there will midterm and final only in PI
+
+* Grade weights for P0 will be approximately 20% attendance - 60% homework - 20% class participation
+
+* Grade weights for PI will be approximately 10% attendance - 30% homework - 30% midterm - 30% final
+
+What follows apply both for P0 and PI:
+
+* For the homework, it is mandatory that you __form groups of 3 or 4 people__
+
+* You need to sign up into a group via Blackboard
+
+* You need to submit the code via Blackboard, i.e. you need to copy-paste the .R file; do *not* submit the .Rproj, *nor* lines copied from the terminal with ">>>", else your grade will be null
+
+* Only one person per group will submit the homework, and the names of the people in the group will be indicated at the top of the assignment
 
 * If you cannot find __teammates__ for for a group, you can ask me to assign you to a group randomly
 
-* You can also work __alone__ if you prefer
+* The deadline for each homework will always be right before the beginning of the next class (e.g. if topic X is covered on Wed nth, then the homework for topic X is due right before the class on Wed n+7th)
 
-* The __weights__ of homework, in-class quizzes and attendance on the grade will be 30-20-50
+## Sessions and exams
 
-* In the __quizzes__, you will get some credit as long as you fill them out
+| Subject | Session # | Type | Date |
+|-----------|-----------|------------|---------------------|
+| P0 | S1 + S2 | Lecture | Jan 11th 2022 |
+| P0 | S3 + S4 | Lecture | Jan 18th 2022 |
+| P0 | S5 + S6 | Lecture | Feb 1st 2022 |
+| P0 | S7 + S8 | Lecture | Feb 8th 2022 |
+| P0 | S9 + S10 | Lecture | Feb 22th 2022 |
+| PI | S1 + S2 | Lecture | Mar 1st 2022 |
+| PI | S3 + S4 | Lecture | Mar 15th 2022 |
+| PI | S5 + S6 | Lecture | Mar 22nd 2022 |
+| PI | S7 + S8 | **Midterm** | Apr 12th 2022 |
+| PI | S9 + S10 | Lecture | Apr 19th 2022 |
+| PI | S11 + S12 | Lecture | May 3rd 2022 |
+| PI | S13 + S14 | Lecture | May 10th 2022 |
+| PI | S15 | **Final** | May 24th 2022 |
 
-* Based on your preferences, today we are having this class in __hybrid format__ and will probably keep doing so (depending on your feedback and on classroom availability)
+## Bibliography
+
+* Hadley Wickham. R for Data Science. O'Reilly
+* Joseph Adler. R in a Nutshell. O'Reilly
+
+The following notes borrow heavily from Wickham's excellent book.
+
+# Introduction to programming
 
 ## Definition of a programming language
 
