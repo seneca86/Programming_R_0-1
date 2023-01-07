@@ -32,13 +32,7 @@ knitr::opts_chunk$set(comment=NA)
 
 * In the __quizzes__, you will get some credit as long as you fill them out
 
-* I have set up __office hours__ right after the class for those of you who have questions — you will see these on the calendar
-
 * Based on your preferences, today we are having this class in __hybrid format__ and will probably keep doing so (depending on your feedback and on classroom availability)
-
-![Grades structure](Figures/grades_structure.png)
-
-![Office hours](Figures/office_hours.png)
 
 ## Definition of a programming language
 
@@ -1999,7 +1993,7 @@ We will also use the `pipe` in order to combine graphs and data transformations 
 ```{r}
 #install.packages('fivethirtyeight')
 library('fivethirtyeight')
-airline_safety %>% View()
+#airline_safety %>% View()
 airline_safety %>% glimpse()
 ```
 
