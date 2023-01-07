@@ -1,0 +1,2759 @@
+---
+title: "Programming 0 and I"
+output:
+  pdf_document: 
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    df_print: tibble
+    highlight: zenburn
+  html_notebook: default
+fontsize: 12pt
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(comment=NA)
+```
+# Introduction to programming
+
+## Organizational aspects
+
+* __The class will be graded__, but this grade will not be part of the official academic records
+
+* As a consequence, I will keep __homework shorter than for Programming I and II__, but there will be still some
+
+* For the homework, it is recommended that you __form groups via Blackboard__
+
+* If you cannot find __teammates__ for for a group, you can ask me to assign you to a group randomly
+
+* You can also work __alone__ if you prefer
+
+* The __weights__ of homework, in-class quizzes and attendance on the grade will be 30-20-50
+
+* In the __quizzes__, you will get some credit as long as you fill them out
+
+* I have set up __office hours__ right after the class for those of you who have questions — you will see these on the calendar
+
+* Based on your preferences, today we are having this class in __hybrid format__ and will probably keep doing so (depending on your feedback and on classroom availability)
+
+![Grades structure](Figures/grades_structure.png)
+
+![Office hours](Figures/office_hours.png)
+
+## Definition of a programming language
+
+A __program is a set of instructions given to a computer__ in order to perform a set of instructions in order. The computer runs this instructions __in a deterministic way__, i.e. it does not make decisions nor introduce randomness in the process. In order to write a program one needs __a programming language__, the same way that in order to write a letter to another person one needs a (human) language, with the difference that the relationship with the computer is asymmetrical.
+
+__The closer a language is to the computer, the more “low-level” it is said to be__ — conversely, the closer the language is to human abstraction, the more “high-level” it is said to be. Unless you go deep into Computer Science, most of the time you will deal with high-level languages
+
+!["Low-level programming is good for the programmer's soul", John Carmack](Figures/carmack.png){width=30%}
+
+## Overview of programming languages
+
+__Different programming languages__ have different approaches and characteristics — some are more powerful than others, and some are better suited to certain types of problems. Because of the commitment of time that learning a language presents, programmers tend to defend their favorite language at the expense of the rest and become opinionated.
+
+__Some classic, powerful languages__ are Lisp, Fortran, C, C++, Python, Perl… they will probably be around for the decades to come. Other more recent ones are Java, Ruby, Go, Julia...
+
+__R is good for analysis but not the most elegant or powerful language__; however, it is strong in statistics and has seen a rebirth in the last decade thanks to the advent of Big Data and Machine Learning.
+
+![Programmers are not very kind in their views of their least favorite languages](Figures/languages.png)
+
+## Development environments
+
+In order to write a programming language __you just need a text editor and a compiler or an interpreter__ depending on whether the language is compiled or not. Often these two elements are combined into what is known as an __IDE (Integrated Development Environment)__ for the sake of convenience. 
+
+Some good text editors are _Atom_ or _Sublime text_, and some well-known IDEs are _VSCode_, _Pycharm_, and _Eclipse_.
+
+In the case of R, _RStudio_ is the most popular IDE. __I recommend that you install both R and RStudio__ in your mac or PC; however, in case you do not want to install anything you may also use _RStudio Cloud_ — all these resources are free. _Replit_ is another excellent web-based IDE, although it still has limited support for R
+
+![RStudio is the undisputed leader in R IDE's, but there are great tools out there for more general purposes](Figures/ides.png)
+
+## Basic commands and operators in R
+
+Let's get started: __open RStudio__ (either the web or the desktop version). As we saw in the intro, RStudio is at its core just a __text editor plus a console__ that interprets commands. Go to the console and type the example with the __print command__ on the command prompt (the “>” simbol) – you should get an output: this is the computer doing what you told him to do.
+
+```{r}
+print('Hello world')
+```
+
+You can store values in variables with the __assignment operator__ “<-”, think of this as putting the value (a number, a word, etc.) into a box to move it around more easily. You can know what is inside this “box” by printing the variable or by __just putting the variable name into the console__
+```{r}
+a<-10
+a
+print(a)
+```
+
+
+```{r}
+b=a**2
+a+b
+animal <- 'dog'
+animal
+```
+
+__The editor__, which typically appears in the upper left pane of RStudio, allows us to store commands and run them in order. You can "throw" a command from the editor to the console by typing _Ctrl Enter_ or _Command Enter_, or by clicking on the "Run" button in RStudio.
+
+The __colon operator__ ”:” generates a sequence from one number of the next, and the ”c” function __concatenates__ values to create vectors — they are equivalent in this case but c is more general since it does not only handle sequences.
+
+```{r}
+1:5
+1:5 + 6:10
+c(1:5) + c(6:10)
+c(1,2)
+animals <- c('dog', 'sheep', 'pig')
+animals
+```
+The colon operator also works backwards:
+```{r}
+10:5
+```
+The importance of the __concatenate operator__ is idiosyncratic of R — other languages would have used loops in order to concatenate elements into a vector.
+
+R is rich in __statistical functions__ such as sum, median, mean, etc. and in common mathematical operators such as “+”, “-”, “*”, “/”, “>”, “=”, “%%” etc.
+
+```{r}
+sum(1:5)
+median(1:10)
+```
+
+__Common mathematical and logical operators__ are quite intuitive except for “==”, which evaluates whether two elements are equal, and which should not be confused with “=”, which assigns a value to an element the same way as "<-" does. To prevent confusion, it is better to avoid using “=” at all in R.
+
+```{r}
+3>4
+3==4
+```
+
+If you do not remember how an operator works, you may just type its name preceded by “?”, and the help window will provide you with the documentation.
+```{r}
+?":"
+?mean
+```
+Common operators such as division,  multiplication, or classic mathematical functions can also be “vectorized”, but in general it is safer to do so with the “c” operator than with the “:”.
+
+```{r}
+10/3
+1:3/3
+cos(c(pi,2*pi))
+exp(c(1:3))
+```
+
+Logical operators also work with the vectorized format.
+```{r}
+1:4 > c(2,2,2,2)
+```
+
+__EXERCISE__
+
+Let's practice a bit:
+
+(1) Calculate the sum of the integers from 1 to 100.
+```{r}
+sum(1:100)
+```
+
+(2) Calculate the sum of the remainder of the division of all integers from 1 to 100 by 3.
+```{r}
+10%%3 #get familiar with the modulo operator
+1:100%%3
+sum(1:100%%3)
+```
+
+(3) Will `sqrt(2)**2-2` yield zero in R? Why or why not?
+```{r}
+sqrt(2)**2 - 2 == 0
+all.equal(sqrt(2)**2, 2)
+```
+
+
+## Quick recap of what we have covered until now
+
+* We saw what a __programming language__ is, some different types of languages and why we are using R
+
+* We got started with __R’s basic commands__, including assignments (‘<-’), prints, and mathematical operators
+
+* We got familiar with __R Studio__ (either the desktop or the cloud version) and its basic features, namely the text editor and the console
+
+* We saw how to __generate sequences__ with the “:” operator and vectors with the “concatenate” operator, and how to calculate basic statistics from them
+
+* We explored the __”help” command__ (“?”), the __logical evaluator__ “==“ and how to apply them in a vectorized way
+
+* We solved our first __quizzes__ by applying the aforementioned tools
+
+* If you have __questions from last class__, now it is a good time to cover them before moving forward
+
+Let's start by reviewing sequences and vector indexing:
+```{r}
+(1:10)
+(1:10)+0.5
+v <- c('ie university', 'harvard', 'london school of economics')
+v
+v[-1]
+v[c(2,3)]
+v[-3]
+v[c(-2,-3)]
+v[c(-2,-3)]
+```
+
+## Getting to know your IDE (Integrated Development Environment)
+
+Programming is not about rote memory, so feel free to use cheat sheets liberally — check the ones here:
+[Cheat sheets](https://www.rstudio.com/resources/cheatsheets)
+
+Some quick tips:
+
+* Use Ctrl+1 and Ctrl+2 to switch between the editor and the console
+
+* Use Alt+“-” to impute a “<-”
+
+* Use Ctrl+Shift+Up in the console to reuse commands that start with a certain character
+
+* Use just the Up arrow to reuse the last commands
+
+* Use Ctrl+Enter or Cmd+Enter to run the code in the editor (you can run just a chunk of code if you first highlight it)
+
+![RStudio cheat sheet](Figures/RStudio.png)
+
+## Remembering R commands
+
+* Programming languages share many concepts but use __different syntax__ to communicate with the computer
+
+* Compared to Python, which you will learn in Programming II, __R syntax is not too distant__, and this can make it easier to learn one after the other but confusing when switching between languages (similarly to jumping between Spanish and Portuguese versus switching between Spanish and German)
+
+* When in doubt, feel free to use cheat sheets and the official documentation to look up syntax: 
+[R Official Documentation](https://www.r-project.org/other-docs.html)
+
+* Remember also that the ? command is quite helpful to be used directly in the console
+
+
+![Base R cheat sheet](Figures/Base_R.png)
+
+ 
+## Types of variables
+
+* Variables can be real numbers (“numeric”), interger numbers (“integer”), strings of text (“character”), true/false statements (“logical”), etc. — __in R, these categories are called “classes”__ (beware that the word has a different meaning in other programming languages)
+
+* __The difference between numeric and integer can be blurry__ sometimes, but typically R will handle it in a way that you do not need to explicitly care about it
+
+* __A factor is a specific type of variable that R uses to handle categorical data__ — categorical data is data defined in discreet pieces as opposed to data defined along a continuum: e.g. the height of a person is continuous, but the nationality or the mother tongue are categorical
+
+* You can think of __factors as a hybrid between integers and characters__ consisting of different “levels” or categories
+
+```{r}
+class(1:2)
+class(1)
+class(2==2)
+class(1i)
+grades <- c('A+', 'A-', 'B+', 'B-', 'A+', 'B+', 'A+')
+factor(grades)
+```
+
+# Loops
+## Introducing loops
+
+* Loops are the way to ask the computer to __perform iterative operations__
+
+* They consist of three parts: a __sequence__, which comes after the “in” clause; a __body__, which are the commands between the brackets; and an __output__, which needs to exist only if we want to store the results
+
+* Loops require a __variable to “iterate”__ through several elements and do some actions
+
+* Loops avoid copy-pasting code and are a __powerful tool of most programming languages__; however, in R we will find that vectors can often replace loops
+
+```{r}
+for (animal in c('chicken', 'pig')){
+  print(animal)
+}
+
+for (i in grades){
+  print(i)
+}
+```
+
+## Practicing loops
+
+* Use the expression below to calculate the first 6 values of Ulam spiral
+
+$$ 4 \cdot n^2 + 3 \cdot n +1 $$
+```{r}
+for (n in (1:6)){
+  print(4*n**2+3*n+1)
+}
+
+4*(0:5)**2+3*(0:5)+1
+```
+
+# Vectors
+
+## Algebra refresher
+
+![Algebra refresher (1/2)](Figures/algebra_1.png)
+
+![Algebra refresher (2/2)](Figures/algebra_2.png)
+
+## Introducing vectors
+
+R is powerful and concise in handling __vectors, matrices and arrays__, so we will review this algebraic elements and it’s properties.
+
+Remember that vectors can be created both the with __colon operator and the concatenate operator__.
+
+The vector function creates an empty vector of a specified type and length — in computer science this process is called __“allocation”__, and is particularly important in low-level languages.
+
+```{r}
+8:4
+c(8:5, 4)
+vector('numeric', 5)
+vector('complex', 5)
+vector('logical', 5)
+```
+
+The __seq operator__ is an extension of the colon operator that allows for creation of lists more generally.
+
+The __length operator__ measures the number of elements in a vector.
+
+```{r}
+seq(from=1, to=20, by=4.5)
+a <- seq(from=1, to=20.5, by=4.5)
+length(a)
+```
+
+![Please fill out the poll](Figures/poll.jpeg){width=30%}
+
+Calculate how many intervals of three units are there between $2^{10}$ and $2^{11}$.
+
+
+```{r}
+length(seq(from=2**10, to=2**11, by=3))
+```
+
+## Exploring properties of vectors
+
+In R, each element of a vector can be given a name — __the name of a vector__ can be modified.
+
+```{r}
+prices <- c(apple=1.5, banana=2.0, orange=3.5, 1.8)
+prices
+```
+```{r}
+names(prices) <- c('apple', 'banana', 'orange', 'pear')
+prices
+```
+
+
+__R has several ways of “indexing”__ (also known as subsetting or slicing), which means accessing only part of a vector.
+
+```{r}
+prices[1]
+prices["apple"]
+```
+
+If you want to __retrieve a slice__ with several elements, the indexes themselves have to be a vector.
+
+```{r}
+prices[c(1,2)]
+```
+
+The __which function__ returns the locations where a logical vector is TRUE. __which.min(x) and which.max(x)__ are shortcuts for which(min(x)) and which(max(x))
+
+```{r}
+prices
+which(prices <2)
+which.max(prices)
+```
+
+If you try to __add vectors of different length__, the elements in the shorter vector will be recycled to match the longer one — this is bad practice.
+```{r}
+1:5 + 1:10
+```
+
+If we really want to create a vector with repeated elements, we can explicitly do so with the __rep() function__.
+```{r}
+rep(1:5, 2, each = 2)
+rep(1:5, 2, length.out = 8)
+```
+
+## Allocating a vector to store output of a loop
+
+We can use an __empty vector__ to store the results of a loop. This is more efficient computationally than enlarging a vector on each iteration of the loop.
+
+In this first example we will calculate the __first eleven Fibonacci numbers__.
+```{r}
+storage <- vector('numeric', 10)
+storage[1] <- 0
+storage[2] <- 1
+for (i in (2:10)){
+  storage[i+1] <- storage[i] + storage[i-1]
+}
+storage
+```
+
+![Fibonacci spiral](Figures/fibonacci_spiral.png)
+
+Now, with the command “runif”, __generate one hundred numbers randomly distributed from 0 to 1__, and progressively add them up, storing the intermediate results in a vector.
+
+Raise your hand if you want to volunteer!
+
+![Try it on you own - anybody wants to volunteer?](Figures/stop.jpeg){width=30%}
+
+```{r}
+generator <- runif(100)
+output <- vector('numeric', length(generator))
+for (i in (2:length(generator))){
+  output[i] <- output[i-1] + generator[i]
+}
+output
+```
+
+## Practicing vectors with some real data
+
+(The files have been uploaded to Blackboard, but I still recommend that you go through the process of downloading them in order to get familiar with the resources).
+
+Go to https://www.stlouisfed.org/ and click on __FRED Economic Data__.
+
+![FRED site](Figures/fred_site.png){width=60%}
+
+Type “Spain gdp” and click on the first search results.
+
+![FRED search box](Figures/fred_search.png){width=60%}
+
+![FRED search results](Figures/fred_result.png){width=60%}
+
+Download the __time series in csv format__ and store it whenever you with in your computer.
+
+If you are working with RStudio desktop, use the three dots at the right of the File pane to navigate to where the file is. If you are using RStudio Cloud, you need to use the “Upload” feature.
+
+![FRED file in RStudio desktop](Figures/fred_file.png){width=60%}
+
+![FRED file in RStudio Cloud](Figures/fred_upload.png){width=60%}
+
+Click on the file and select “Import dataset”: __RStudio will open an import wizard__ that generates the code for you, although the important part is just the “read_csv” command.
+
+```{r}
+library(readr)
+gdp <- read_csv("FRED/FRED_Spain_GDP.csv")
+gdp
+```
+
+![Try it on you own - anybody wants to volunteer?](Figures/stop.jpeg){width=30%}
+ 
+We have just loaded the content of the csv file into a __dataframe or tibble__ (which is a slightly improved version of a dataframe).
+```{r}
+gdp 
+```
+
+We can access the columns of the dataframe with the __$ operator__ — e.g. we can push the content of the column with the GDP values into a vector. __Dataframes are actually more powerful__ to deal with tabular data, but let’s stick with vectors for the moment.
+
+```{r}
+gdp_values <- gdp$CLVMNACSCAB1GQES
+gdp_dates <- gdp$DATE
+```
+
+Calculate the __maximum value__ of Spain’s quarterly GDP, and the quarter when it happened.
+```{r}
+gdp_dates[which.max(gdp_values)]
+```
+
+Calculate the __quarters__ where Spain’s GDP was lower than €200 Bn.
+```{r}
+gdp_dates[which(gdp_values<200000)]
+```
+
+Generate a vector with __all the values except for the last one__ in the series.
+```{r}
+gdp_values[-length(gdp_values)]
+```
+
+Store the __dates as names__ of the vector with the values.
+```{r}
+names(gdp_values) <- gdp_dates
+```
+
+__Access the value__ of 2019Q4 by using its name.
+```{r}
+gdp_values['2020-01-01']
+```
+
+# Matrices
+
+## Introducing matrices
+
+An array is the name for the generalized concept of vector in more than one dimensions. In the bidimensional case, arrays are typically called matrices — in R, a matrix is a special case of a bidimensional array.
+$$A=\begin{pmatrix}
+1 & 5 & 9 \\
+2 & 6 & 10 \\
+3 & 7 & 11 \\
+4 & 8 & 12
+\end{pmatrix}
+$$
+```{r}
+matrix(1:12, nrow = 4)
+array(1:12, dim=c(2,2,3))
+```
+
+Arrays and matrices are defined with the array and matrix functions, which bear some differences. You may use the array function to create a matrix as long as you specify two dimensions — you can check they are equivalent with the command “identical”.
+
+```{r}
+identical(array(1:12, dim=c(4,3)), matrix(1:12, nrow = 4))
+```
+
+The commands dim, ncol and nrow provide the size of the matrix or array.
+
+
+```{r}
+A <- matrix(1:12, nrow = 4)
+dim(A)
+nrow(A)
+ncol(A)
+dim(A) <- c(2,6)
+A
+```
+$$A=\begin{pmatrix}
+1 & 3 & 5 & 7 & 9 & 11 \\
+2 & 4 & 6 & 8 & 10 & 12 \\
+\end{pmatrix}$$
+
+_dim_ can be used to modify the dimensions.
+
+## A few simple matrices
+
+With the commands _eye_, _diag_, _ones_ and _zeros_ we can easily generate diagonal matrices, matrices full of ones and matrices full of zeros, respectively. Note that _eye_ is a generalization of _diag_ that does not require the matrix to be squared:
+
+$$I=\begin{pmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+\end{pmatrix}
+$$
+```{r}
+diag(3)
+```
+$$ I_{not squared} = \begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+\end{pmatrix}
+$$
+```{r}
+library('pracma')
+eye(n=3, m=4)
+```
+
+$$ \bf{1} = \begin{pmatrix}
+1 & 1 \\
+1 & 1 \\
+\end{pmatrix}
+$$
+```{r}
+ones(n=2, m=3)
+```
+$$ \bf{0} = \begin{pmatrix}
+0 & 0 & 0 \\
+0 & 0 & 0 \\
+\end{pmatrix}
+$$
+```{r}
+ones(n=2, m=2)
+```
+
+## Indexing matrices
+In R, the columns and rows of a matrix or array can be given names, similarly to the elements of a vector — we will focus on matrices for the sake of simplicity. Names need to be provided in a list of two vectors — “lists” are just collections of elements (in this case, vectors) that we will study later on.
+
+$$B=\begin{pmatrix}
+1 & 4 & 7 & 10 \\
+2 & 5 & 8 & 11 \\
+3 & 6 & 9 & 12 \\
+\end{pmatrix}$$
+
+```{r}
+B <- matrix(1:12, nrow=3, dimnames=list(c('R1', 'R2', 'R3'),
+                                        c('C1', 'C2', 'C3', 'C4')))
+B
+```
+
+Indexing can be done through the actual “indexes” or through the names of the rows and columns — as you see, it is easy to get creative and generate “slices” of the matrix.
+
+```{r}
+rownames(B)
+colnames(B)
+B[1,3]
+B['R3', 'C2']
+B[1:2, c('C2', 'C3')]
+```
+
+
+Matrix can be spread out and converted to vectors, and also be bound with another matrices — these are not algebraic operations but still will be useful.
+
+$$B=\begin{pmatrix}
+1 & 4 & 7 & 10 \dotsc 11 & 12 \\
+\end{pmatrix}$$
+
+
+```{r}
+c(B)
+```
+
+Matrices can also be bound together, even when they hold different types of variables.
+
+```{r}
+C = matrix(rep(c('chicken', 'pig', 'cow'), 4),
+           nrow = 3,
+           dimnames = list(c('R1', 'R2', 'R3'), c('C1', 'C2', 'C3', 'C4')))
+rbind(B,C)
+cbind(B,C)
+```
+
+## Performing arithmetic with arrays
+
+![It will take us a bit longer](Figures/neo.jpeg){width=50%}
+
+The standard arithmetic operators work element-wise on matrices, given they are the appropriate size.
+```{r}
+B
+B**2
+B*(B**2)
+```
+Again, note that these operations are element-wise and therefore are not the same as the algebraic operations $$ B \cdot B $$ or $$B \cdot B^2 $$ respectively.
+
+So, let's get started with actual algebraic operations. The simplest one is the transpose operator, which is named _t_ in R.
+$$ B^{T} $$
+```{r}
+t(B)
+```
+
+The (inner) matrix product requires the operator %*%.
+$$ A \cdot B $$
+```{r}
+(A <- matrix(1:12, nrow = 4))
+B
+A %*% B
+```
+
+In vectors the inner product is also performed with the %*% operator, whereas the outer product, also called tensor product, (which is typically not defined for matrices) is performed with the %o%.
+
+
+$$ u \cdot v = u_iv_i = \begin{pmatrix}
+1 & 2 & 3
+\end{pmatrix} \cdot 
+\begin{pmatrix}
+2 \\
+3 \\
+4 \\
+\end{pmatrix} = 20
+$$
+```{r}
+(u <- 1:3)
+(v <- 2:4)
+u %*% v
+```
+
+$$ u \otimes v = u_iv_j = \begin{pmatrix}
+1 \\
+2 \\
+3 \\
+\end{pmatrix} \otimes 
+\begin{pmatrix}
+2 & 3 & 4 \\
+\end{pmatrix} =
+\begin{pmatrix}
+2 & 3 & 4\\
+4 & 6 & 8\\
+6 & 9 & 12\\
+\end{pmatrix}
+$$
+```{r}
+(u <- 1:3)
+(v <- 2:4)
+u %o% v
+```
+
+
+Weirdly, the cross product, sometimes called wedge product, requires a external package names 'pracma' to be performed in R.
+
+$$ u \wedge v = \begin{pmatrix}
+1 & 2 & 3 \\
+\end{pmatrix} \wedge \begin{pmatrix}
+2 & 3 & 4
+\end{pmatrix} = 
+\begin{pmatrix}
+-1 & 2 & -1 \\
+\end{pmatrix}
+$$
+
+```{r}
+# install.packages('pracma') 
+library('pracma')
+cross(u, v)
+```
+
+The exponential operator also works element-wise, so it does not serve the purpose of inverting a matrix — the solve function does.
+
+$$ D = \begin{pmatrix}
+4 & 3 & 8\\
+9 & 5 & 1\\
+2 & 7 & 6\\
+\end{pmatrix}
+$$
+
+$$ D \cdot D^{-1} = I $$
+
+```{r}
+(D <- matrix(c(4,9,2,3,5,7,8,1,6), nrow=3))
+D**(-1)
+solve(D)
+```
+
+Declare a 3x3 matrix whose elements are zero in the diagonal and one elsewhere, and calculate the determinant of its inverse
+
+![Please fill out the poll](Figures/poll.jpeg){width=30%}
+
+Declare a 3x3 matrix whose elements are zero in the diagonal and one elsewhere, and calculate the determinant of its inverse.
+
+$$ X = \begin{pmatrix}
+0 & 1 & 1\\
+1 & 0 & 1\\
+1 & 1 & 0\\
+\end{pmatrix}
+$$
+$$ \det(X^{-1}) $$
+
+```{r}
+det(solve(matrix(c(0,1,1,1,0,1,1,1,0), nrow=3)))
+```
+
+Alternatively, we can use the _eye_ and _ones_ command for a more elegant solution:
+```{r}
+det(solve(ones(3)-eye(3)))
+```
+
+
+# Lists
+## Introducing lists
+
+![We will cover lists and proceed to forget about them](Figures/escobar.jpeg){width=50%}
+
+A list is a generalization of a vector that allows for elements of different types — lists are created with the “list” function.
+Indeed, in R vectors are actually referred to as “atomic” vectors and lists as “recursive” vectors, so the term “vector” can be applied both to atomic vectors and to lists — _recursive_ denotes the fact that a list can contain other variables, including lists.
+
+![Lists and vectors](Figures/lists.png){width=50%}
+
+Because of these properties, lists can sometimes get convoluted, so it may be helpful to do some visualizations 
+```{r}
+list(c(1,2,3), 'chicken', 'pig', TRUE)
+```
+
+Note that we cannot handle this set of heterogeneus variables with an atomic vector:
+```{r}
+(weird_vector <- c(c(1,2,3), 'chicken', 'pig', TRUE))
+class(weird_vector)
+```
+
+Note how all elements have been converted to characters, which is probably not the desired behavior.
+
+```{r}
+x1 <- list(c(1, 2), c(3, 4))
+x2 <- list(list(1, 2), list(3, 4))
+x3 <- list(1, list(2, list(3)))
+```
+
+![examples of lists](Figures/list_example.png){width=50%}
+
+## Indexing lists
+
+When printing a list with lists inside, the structure can become confusing.
+
+```{r}
+(my_list <- list(a = 1:3, b = "a string", c = pi, d = list(-1, -5)))
+```
+
+We can look into the structure of a list (and, of any variable), with the command _str_.
+
+```{r}
+str(my_list)
+
+```
+The _summary_ command is another neat, top-down way to view the structure of a list.
+```{r}
+summary(my_list)
+```
+
+There are three ways to subset a list: (1) with square brackets, (2) with double square brackets, and (3) with the \$ sign. [] extracts a sublist, [[]] extracts a single component from a list, and $ extracts a named element of a list.
+
+Note how the last two syntaxes are equivalent.
+
+```{r}
+my_list[4]
+
+my_list[[4]]
+
+my_list$d
+```
+
+__EXERCISE__
+
+What is the correct _list_ metaphor for each image?
+
+![A metaphor for a list](Figures/pepper.png){width=80%}
+
+![Please fill out the poll](Figures/poll.jpeg){width=40%}
+
+![A metaphor for a list - solved](Figures/pepper_solved.png){width=50%}
+
+# Simulated data
+## Generating samples
+Sources of data will either come from the outer world (i.e. data we read from a report, a website, etc.) or from our own imagination – this is what we call simulated data. 
+
+A simple way to generate data is by drawing occurrences out of a list, either replacing or not the withdrawn instances — this is called a sample with or without replacement. In samples without replacement we will not see the same withdrawn instance twice.
+
+![R is well-equipped to handle randomness](Figures/dice.png){width=50%}
+
+```{r}
+sample(c('chicken','pig'), 8, replace=TRUE)
+```
+What happens if we set _replacement_ equal to _FALSE_?
+
+Let's see what happens when we do not replace the animals in _farm_ and we keep withdrawing more and more:
+
+```{r}
+farm <- c('chicken','pig', 'hen', 'cow', 'sheep', 'beef', 'rooster')
+sample(farm, 3, replace=FALSE)
+sample(farm, 7, replace=FALSE)
+# sample(farm, 8, replace=FALSE)
+sample(farm, 8, replace=TRUE)
+```
+![If we do not replace the sheep that we withdraw, at some point there won't be any](Figures/farm.png){width=50%}
+
+Remember that _factors_ are a good way to check the levels of a categorical sample.
+```{r}
+factor(sample(c('chicken','pig'), 8, replace=TRUE))
+```
+
+Each time a sample is generated you will get a different results because, in general, when we generate a simulation we want it to be randomized. However, if you want the simulation to yield reproducible results you can “freeze” this randomness with the command “set.seed”.
+```{r}
+set.seed(1)
+sample(c('chicken','pig', 'hen', 'cow', 'sheep', 'beef', 'rooster'), 3,
+       replace=FALSE)
+```
+## Practicing with simulated data
+Let’s run an exercise using what we learnt about samples.
+
+* In order for it to be reproducible, set a seed of 1 at the beginning of the code
+
+* Create a chest of 20 gold, 30 silver, and 50 bronze coins — you may use a vector consisting of smaller vectors created with the rep command
+
+* Draw 10 coins from the chest, with replacement
+
+* How many gold coins did you get? — you can count them visually or with the sum() command
+
+* Now repeat the experiment without replacement, how many gold coins did you get?
+
+![A visual representation of our generated sample](Figures/gold.png){width=50%}
+
+![Please fill out the poll](Figures/poll.jpeg){width=30%}
+```{r}
+set.seed(1)
+chest <- c(rep('gold', 20),
+           rep('silver', 30),
+           rep('bronze', 50))
+chest
+drawn <- sample(x=chest, size=10, replace=TRUE)
+drawn
+sum(drawn=='gold')
+drawn <- sample(x=chest, size=10, replace=FALSE)
+sum(drawn=='gold')
+```
+
+# Dataframes
+## Introducing dataframes
+![Soon we will be using dataframes more than any other type of variable](Figures/dust_doge.jpeg){width=50%}
+
+With what we have learned, let’s generate some data for ten fictitious companies and wrap them together in a new type of variable, a dataframe.
+```{r}
+(sales <- runif(10))
+(industry <- factor(sample(c('Oil_and_gas', 'Telco', 'Retail'), 10, replace=TRUE)))
+(public <- sample(c(TRUE, FALSE), 10, replace=TRUE))
+(df <- data.frame(sales, industry, public))
+head(df)
+tail(df)
+str(df)
+summary(df)
+```
+
+## Practicing with built-in dataframes
+R has several __built-in dataframes__ that you may use to practice — you can see them by typing _data()_.
+```{r eval=FALSE, include=FALSE}
+# data()
+```
+
+Let’s __explore the first few rows__ of the dataset “mtcars” by using the _head()_ command. If you want to understand what each column means remember that you may use ?mtcars
+```{r}
+head(mtcars, 10)
+```
+
+We can check the __column names__ with names() or colnames() and access each of them with __the \$ operator__.
+```{r}
+names(mtcars)
+mtcars$mpg
+```
+
+The table() command is useful to understand how a categorical column is distributed.
+```{r}
+table(mtcars$cyl)
+```
+
+We can create new columns, e.g. “gallons per mile” with the $ command
+```{r}
+(mtcars$gpm <- 1/mtcars$mpg)
+```
+
+Slicing can be achieved with __squared brackets and the two indexes__, although it is more intuitive to use $ plus the row index.
+```{r}
+mtcars[1:4, 2]
+mtcars$cyl[1:4]
+```
+![Slicing dataframes will be one of our most used operations moving forward](Figures/slicing.png){width=30%}
+
+# Introducing the tidyverse
+## Installing packages and managing the workspace
+Packages are external collections of functions, data, and code — they are what make R a powerful language. Packages are stored in “the library” — they need to be installed once and then summoned from the library every time we run a program.
+
+There are myriads of libraries and we will discover a few of them during the course — for the moment we will just install the “tidyverse”, which is a set of libraries that allow us to exploit the full potential of dataframes.
+
+Packages should be installed just once with __install.packages()__
+
+```{r}
+library("tidyverse")
+glimpse(df)
+```
+While we are working, it is good to know the names of the variables we have created — the ls() and BrowseEnv() commands will help us with that.
+```{r}
+ls()
+#browseEnv()
+m <- 'dummy'
+rm(m)
+rm(list = ls())
+```
+
+## Introducing the tidyverse and tibbles
+Tibbles are augmented lists, and can be seen as a slightly improved and friendlier version of the data frame. Tibbles are the building blocks of the “tydiverse”, which is a “universe” of R packages that fit nicely together — their developers deserve recognition.
+
+![The tidyverse is a universe of several libraries](Figures/tidyverse.png){width=60%}
+
+![Hadley Wickham](Figures/hadley.png){width=40%}
+
+![Hadley Wickham has been crediting with popularizing R in Data Science](Figures/news.png){width=70%}
+
+![His book is a great reference for those interested in going a bit deeper into R](Figures/book.png){width=30%}
+
+We will use tibbles for most of the course, but essentially everything we will learn about them will be applicable to dataframes, too.
+
+```{r}
+library('tidyverse')
+tb <- tibble(x=1:5, y=5:1)
+tb$x
+tb$y
+class(tb)
+```
+
+## Practicing with tibbles and for loops
+
+Let’s __build a tibble__ with four columns, where each of them is a vector of ten elements randomly distributed from -1 to 1 — we achieve this with the __“rnorm” function__, which stands from randomly sampled from a normal distribution.
+
+```{r}
+(df <- tibble(
+    a = rnorm(10),
+    b = rnorm(10),
+    c = rnorm(10),
+    d = rnorm(10)
+))
+```
+
+Let’s say we want to __compute the median of each column__, we could do it with four commands, but this is not very elegant. 
+```{r}
+median(df$a)
+median(df$b)
+median(df$c)
+median(df$d)
+```
+
+A better way to do it is with a loop that iterates along the columns of the tibble.
+
+As we iterate, we need to store the results somewhere, so we need to __prepare an empty vector__ in advance. Remember that to access the content of either the tibble or the vector, we need to use the operator [[]].
+```{r}
+output <- vector("double", ncol(df))
+for (i in seq(df)){
+  output[[i]] <- median(df[[i]])
+}
+output
+```
+
+This example contains several of the elements of the lesson, so let’s make sure we understand it before moving on!
+
+## Practicing with tibbles and real data
+
+Let’s go to https://data.fivethirtyeight.com/, download the data set soccer-spi and unzip it (SPI stands for “soccer power index"). (You may also download the dataset from Blackboard).
+
+![Five Thirty Eight is a great resource to find interesting datasets](Figures/538.png){width=50%}
+
+![Sample dataset from Five Thirty Eight](Figures/UCL.png){width=50%}
+
+Load the dataset into a tibble with the read_csv command.
+```{r}
+(soccer <- read_csv('soccer-spi/spi_global_rankings.csv'))
+```
+
+Get how many teams are listed from each of the major leagues with the “table” command. The _head()_ command here just curtails the length of the output.
+```{r}
+head(table(soccer$league),10)
+```
+
+List the teams with an spi index greater than 90.
+```{r}
+soccer[soccer$spi > 90,]
+```
+
+Get the median of the spi score for the Premier League.
+```{r}
+soccer[soccer$league == 'Barclays Premier League',]
+mean(soccer[soccer$league == 'Barclays Premier League',]$spi)
+```
+
+# Strings
+## String basics
+
+Strings are a fundamental type of variable of every programming language. In R strings are called 'characters' and, although the number of things one can do with a string seems limited, the package _string_ from tidyverse will prove otherwise.
+
+Strings are defined with quotes, which can be single or double as long as one is consistent. This redundancy can be used to show quotes within a string:
+
+```{r}
+(sentence <- 'My Programming 0 professor is so cool')
+(ironic_sentence <- "My Programming 0 professor thinks he is 'cool'")
+```
+
+Special characters are typically tricky to handle within strings. The _escape character_ \\ must precede double quotes if we want to explicitly handle them. Note that the print command will show the escapes, so in order to see the raw contents of the string we need the command _writeLines()_
+
+```{r}
+string_with_quotes <- "Billie Eilish\'s \"Bad Guy\" is clearly overrated"
+print(string_with_quotes)
+writeLines(string_with_quotes)
+```
+
+Special characters such as greek letters can be represented through a convention called "Unicode":
+```{r}
+(mu <- '\u00b5')
+```
+
+Base R has functions to handle strings, but they are not great. We will instead use the ones provided by _stringr_, which is a library contained in _tidyverse_.
+
+```{r}
+sentence
+length(sentence)
+str_length(sentence)
+```
+
+Another useful function is _str_c_, which stands for 'string concatenation':
+
+```{r}
+str_c('IE', 'University')
+```
+We can explicitly define a separator in the concatenation:
+```{r}
+str_c('IE', 'University', 'is', 'fantastic', sep=' ')
+```
+
+We have already come across the "NA" symbol in R. It stands for "Not available" and is not exclusive of strings; it is R's way of handling unknowns. _str_replace_na()_ is a nice way to substitute "NA"s with other values of our choice:
+
+```{r}
+u <- c(NA, 'will', 'win', 'the', 'next', 'Champions', 'League')
+v <- str_replace_na(u, 'Real Madrid')
+str_c(v, collapse=' ')
+```
+
+Subsetting strings is another useful operation in data wrangling:
+
+
+```{r}
+important_statement <- 'Kim Kardashian is the second of four siblings'
+str_sub(important_statement, 1, 3)
+str_sub(important_statement, -8, -1)
+```
+
+The assignment form of _str_sub()_ can be used to modify strings:
+
+```{r}
+str_sub(important_statement, 1, 3) <- 'Kourtney'
+str_sub(important_statement, 28, 33) <- 'first'
+important_statement
+```
+
+The commands _str_to_upper_, _str_to_lower_ and _str_to_match_ are self-explanatory:
+```{r}
+str_to_upper('lower case wants to grow')
+str_to_lower('UPPER CASE WANTS TO SHRINK')
+str_to_title('tHE titlES nEEDS PRoper capitaLIZATiON')
+```
+Also, we can sort alphabetically or in reverse alphabetical order with _str_sort_:
+```{r}
+str_sort(c('A', 'brilliant', 'cat', 'delays', 'getting', 'food'), decreasing=TRUE)
+```
+
+Finally, although we said we would use _stringr_ functions, it would be unfair not to mention base R's main function for handling strings, _paste_, which is equivalent to _str_c_.
+
+```{r}
+paste('Programming', 0:2, 'is a cool class', sep=' ')
+```
+
+## Matching patterns
+
+The command _str_match_ (or its visually appealing alternative _str_view_) allow us to look for substrings within strings. Let's look at which of the members of The Beatles have a "g" in their name:
+
+```{r}
+#install.packages('htmlwidgets')
+beatles <- c('John', 'Paul', 'Ringo', 'George')
+str_match(beatles, 'g')
+```
+
+We can also use _str_match_ to look for specific letters or patterns within a string:
+
+```{r}
+moby_dick <- 'Call me Ishmael. Some years ago-
+never mind how long precisely- having little 
+or no money in my purse, and nothing particular
+to interest me on shore, I thought I would sail
+about a little and see the watery part of the world.'
+
+letters
+str_match(moby_dick, letters)
+str_match(moby_dick, c('Ishmael', 'Jacob', 'Moses'))
+```
+
+A related command is _word_, which extract words from a string at certain positions. The \\n is called 'carriage return' or simply 'newline', and is just R's way of handling the jump to a new line within a string. We introduced some carriage returns when typing the sentence, so we can use the `writeLines` command to print it in a nicely formatted manner:
+
+```{r}
+sub_sentence <- word(moby_dick, start=4, end=-33)
+writeLines(sub_sentence)
+```
+
+What does the narrator say between positions 21 and 22?
+
+![Please fill out the poll](Figures/poll.jpeg){width=30%}
+
+```{r}
+writeLines(word(moby_dick, start=21, end=22))
+```
+
+If we want to store the actual words into a vector, we need to use _str_split()_ and define a separator (_str_split_ returns a list so we need to use squared bracket to access the atomic vector inside, which is more practical). Beware that the carriage return may be merging some words together.
+```{r}
+(moby_words <- str_split(moby_dick, ' ')[[1]])
+```
+
+Now let's detect matches in the words, e.g. let's find out which of those words contain the letter 'e' by means of the function _str_detect_:
+```{r}
+str_detect(moby_words, 'e')
+```
+
+If we want to match more complex patterns, e.g. "all words that start with t", then we need _regular expressions_. Regular expressions are a sublanguage that allow us to describe patterns in strings. They are used in many languages but, because their syntax is hard and their usage is niche, they fall outside the scope of this course. For illustrative purposes let's take a look at a few examples:
+
+* Which of the first ten words start with a?
+```{r}
+str_match(moby_words[1:10], '^a')
+```
+
+* Which of the first ten words finish with e?
+```{r}
+str_match(moby_words[1:10], 'e$')
+```
+* Which of the first ten words contain the letter _e_ preceded and followed with at least another letter?
+```{r}
+str_match(moby_words[1:10], '.e.')
+```
+
+# Functions and flow control
+## Introduction to functions
+### Purpose and syntax
+
+![Soon in this class, copy-pasting will be widely fronwed-upon](Figures/drake.jpeg){width=40%}
+
+Functions are one of the most important features of R and of programming languages in general. They are so important that __a whole style of programming (_functional programming_) is named after them__. R, together with more exotic languages such as Haskell, Lisp or, to a lesser extent, Ruby, is considered a functional language. By contrast, Python or Java are not functional languages.
+
+One key feature of a functional language is that functions are first-class, meaning that they can be passed as parameters to other functions. Another key feature is that the code does not "change state", meaning that successive calls to a function will yield the same result. In words of Wikipedia:
+
+> "_Functional programming is a programming paradigm where programs are constructed by applying and composing functions. It is a declarative programming paradigm in which __function definitions are trees of expressions that map values to other values, rather than a sequence of imperative statements__ which update the running state of the program."_
+
+In practical terms, this just means that we should use functions profusely when coding in R, because they have several advantages:
+
+* They make code __easier to read__
+
+* They make code maintenance and update easier, because __changes are done in only one place__
+
+* They reduce the errors associated with __copy-pasting__
+
+Because functions have this overarching role, we will briefly introduce them and the cover a number of tools that are often used with them, such as `if-else` commands, or `while` loops. Once those are explained we will get back to functions and deal with more advanced features.
+
+The basic structure of a function should consist of four attributes:
+
+* __Name__: anything is valid as long as you do not use internal R's keywords
+
+* __Arguments__: the inputs, if any, to the function (they can be several, and of any type)
+
+* __Actions__: the commands that the function will execute (calculations, prints, plots, etc.)
+
+* __Output__: the result that the function will return - there may be none if the purpose of the function is to execute the actions
+
+This is the basic structure of a function:
+```{r}
+NAME <- function(ARGUMENTS) {
+  ACTIONS
+  return(OUTPUT)
+}
+```
+### First examples and conventions
+
+A simple function without arguments that prints today's date would look like:
+```{r}
+print_date <- function() {
+  print(paste('today is', Sys.Date()))
+}
+
+print_date()
+```
+
+Regarding style, names of functions that are descriptive (e.g. two words tied by an underscore) are preferred to names that are too short. This applies also to variables, with a few exceptions of names that, because they are very common, are both short and descriptive:
+
+* `x`, `y`, and `z` for vectors
+* `w` for vectors of weights
+* `df` for dataframes
+* `tb` for tibbles
+* `i`, `j` for numeric indices
+* `n` for length, or number of rows
+* `p` for number of columns
+
+A slightly more complicated function that takes $x$ and $y$ and returns $x^{y}$ would be:
+
+```{r}
+raise_to_the_power <- function(x, y) {
+  z <- x^{y}
+  return(z)
+}
+
+raise_to_the_power(2, 5)
+```
+
+![Please fill out the poll](Figures/poll.jpeg){width=30%}
+
+What does the following function do?
+
+```{r}
+secret_function <- function(x) {
+  y <- (x - 32) * 5 / 9
+  return(y)
+}
+
+secret_function(100)
+```
+
+A function that prints all the primes before a certain integer would be:
+
+```{r}
+# The basic structure of a function
+library('primes')
+primes_before <- function(n) {
+  for (i in 1:n){
+    if (is_prime(i)) {
+      print(i)
+    }
+  }
+}
+
+primes_before(20)
+```
+
+### Handling unexpected inputs
+
+Now test what happens if we do _primes_before('hello')_ ... a robust function will complain and stop execution. However, this defensive behavior makes functions longer, so there will always be a trade-off between robustness and simplicity.
+
+Let's include a check for this precondition into our function that throws an error if the argument is not numeric:
+
+```{r}
+primes_before <- function(n) {
+  if (!is.numeric(n)) {stop('Input argument must be numeric')}
+  # else: ... 
+}
+
+primes_before(20)
+```
+
+![When using a function, either you make it complain when the arguments are not the proper ones, or you will get errors](Figures/discussion.jpeg){width=40%}
+
+Note that we had to insert two conditions within the function with the keyword `if`. This is called a _conditional statement_ and is an important element of programming in all languages. We need to examine those in a bit more detail before moving on.
+
+## Conditional statements
+### Definition and syntax
+An `if` statement allows you to conditionally execute code, according to the following general structure. `if` statements often, but now always, appear inside functions.
+
+```{r}
+CONDITION <- TRUE
+if (CONDITION) {
+  # commands to be executed when the condition is true
+} else {
+  # commands to be executed when the condition is false
+}
+```
+
+Note that the squiggly brackets always follow the `if` command, and that the contents should be indented by either two or four spaces. This makes it easier to see the hierarchy in the code by skimming the left-hand margin. An opening curly brace should always go on its own line, unless it is followed by `else`. The code inside curly brackets should always be indented.
+
+Let's try a brief example:
+
+```{r}
+movie_duration <- 100
+
+if (movie_duration > 120){
+  x <- 'Too long'
+} else {
+  x <- 'Too short'
+}
+
+print(x)
+```
+It is acceptable to drop the squiggly brackets when the `if` statements is short and can be fit into a single line:
+
+```{r}
+x <- if (movie_duration > 120) 'Too long' else 'Too short'
+print(x)
+```
+
+Let's see an example when we use an `if` statement to provide a user message:
+
+```{r}
+condition <- (4>3)
+if (condition){
+  print('The expression is correct')
+} else {
+  print('The expression is not correct')
+}
+```
+### The `ifelse` command
+`if` statements are present in most programming languages, even in Excel. R has a function named `ifelse()` that is a shorter alternative to the traditional `if-else` statement. The example above can be expressed as:
+
+```{r}
+ifelse(4>3, 'The expression is correct', 'The expression is not correct')
+```
+
+`ifelse()` also handles vectors:
+
+```{r}
+grades <- c(55, 30, 85, 100)
+ifelse(grades>50, 'pass', 'fail')
+```
+
+### Nested `if-else`
+![This type of logic is easily reflected in `if-else` statements](Drawio/clouds.drawio.png){width=60%}
+
+Interestingly, `if-else` statements can be "nested". Try the following example with different values of `clouds` and `thunder`:
+```{r}
+clouds <- TRUE
+thunder <- FALSE
+if (clouds){
+  comment_1 <- 'Not sunny'
+  if (thunder){
+    comment_2 <- 'stormy'
+  } else {
+    comment_2 <- 'just cloudy'
+  }
+} else {
+  comment_1 <- 'Sunny'
+  comment_2 <- 'and bright'
+}
+
+str_c(comment_1, comment_2, sep=', ')
+```
+
+A more compact way of building that logic is with the `ifelse()` function nested twice:
+
+```{r}
+ifelse(!clouds, 'Just sunny', ifelse(thunder, 'Stormy', 'Just cloudy'))
+```
+
+A more friendly way of writing a nested logic is by indenting the code. This applies more generally and not only to `if-else` statements: indentation generally improves readability.
+```{r}
+ifelse(!clouds,
+       'Just sunny',
+       ifelse(thunder,
+              'Not sunny, stormy',
+              'Not sunny, just cloudy'
+              )
+       )
+```
+
+It is useful to encapsulate `if-else` statements inside functions, so that we can try them with different inputs:
+
+```{r}
+forecaster <- function(clouds, thunder){
+    if (clouds){
+      comment_1 <- 'Not sunny'
+      if (thunder){
+        comment_2 <- 'stormy'
+      } else {
+        comment_2 <- 'just cloudy'
+      }
+    } else{
+      comment_1 <- 'Sunny'
+      comment_2 <- 'and bright'
+    }
+    str_c(comment_1, comment_2, sep=', ')
+}
+
+forecaster(clouds=TRUE, thunder=TRUE)
+forecaster(clouds=TRUE, thunder=FALSE)
+forecaster(clouds=FALSE, thunder=TRUE)
+forecaster(clouds=FALSE, thunder=FALSE)
+```
+
+### `if-else` constructions with multiple cases
+
+Finally, remember that nested `if-else` statements can deal with a large number of cases:
+
+```{r}
+temp <- 15
+if (temp <= 0) {
+  'freezing'
+} else if (temp <= 10) {
+  'cold'
+} else if (temp <= 20) {
+  'cool'
+} else if (temp <= 30) {
+  'warm'
+} else {
+  'hot'
+}
+```
+
+## `while` loops
+### Definition and examples
+
+Before introducing `while` loops let's remember the structure of a conventional `for` loop:
+```{r include=FALSE}
+list_of_elements <- 1:10
+```
+```{r}
+for (iterator in list_of_elements){
+  # do things
+}
+```
+
+A simple example is a loop that takes a number and squares it:
+
+```{r}
+for (i in 1:5){
+  print(i^2)
+}
+```
+
+Sometimes we need to execute a look until certain condition is met. This is where the `while` loop enters the scence. Say we want know which is the first number whose squared power is higher than 200:
+
+```{r}
+i <- 1
+while (i**2 < 200){
+  i <- i+1
+}
+print(i)
+```
+
+`while` loops are mostly used in simulations, which is not the focus of the course, so we will not use them often. However, they are more general than `for` loops: any `for` loop can be rewritten with a `while` loop whereas not every `while` loop can be rewritten with a `for` loop: 
+
+```{r}
+start <- 1
+end <- 5
+# for version:
+for (i in seq(from=start, to=end)){
+  print(i)
+}
+
+# while version:
+i <- start
+while (i <= end){
+  print(i)
+  i <- i + 1
+}
+```
+
+A major risk with `while` loops is to generate an infinite loop, i.e. a loop that runs forever because the condition is never met. If you incur in this error, you will need to press `Esc` to kill the execution and recover the prompt in the terminal.
+
+### `Next` and `break`
+Two keywords related to `while` and `for` loops are `break` and `next`, which serve the purpose of leaving a loop or skipping one iteration, respectively. To illustrate `break`, let's build a `while` loop with a condition that is always met (e.g. $1==1$) and then include the condition that stops the loop inside the loop itself:
+
+```{r}
+n <- 0
+while (1==1){
+  n <- n + 1
+  print(n)
+  if (n >= 4) break
+}
+```
+
+To illustrate `next`, which appears more frequently in `for` loops, let's iterate through names in a vector skipping those that consist of four letters:
+```{r}
+names <- c('Albert', 'Betty', 'Charlie', 'Diana', 'Elon', 'Fred', 'George')
+for (m in names){
+  if (str_count(m) == 4) next
+  print(m)
+}
+```
+
+## More on functions: arguments and outputs
+
+### Types of arguments
+
+Now that we have learned more about loops and conditional execution we can build more complicated functions. Now we need to understand how the input and output of a function works.
+
+The inputs of a function are called _arguments_. Broadly speaking, arguments typically fall into two broad categories: arguments that supply the __data__ to compute on, and arguments that control the __manner__ in which the calculation is performed. If we look at a familiar function such as `log`, we will see one argument is the data and the other one is the base of the logarithm:
+```{r}
+log(100, base=10)
+log(100, base=exp(1))
+```
+
+Generally, data arguments come first, whereas detail arguments go at the end and have default values, which should be the most frequent. In this case, the default value of the base of the logarithm is the Euler number, i.e. the default logarithm in R is the natural logarithm.
+```{r}
+log(100)
+```
+
+Say we want to calculate the present value of some cash flow $CF$ at an interest rate of $r$ and $n$ periods in the future:
+```{r}
+present_value <- function(cf, r=0.05, n=1){
+  present_value = cf / (1 + r)**n
+  print(present_value)
+}
+
+present_value(100)
+present_value(100, r=0.05, n=1)
+present_value(100, r=0.06, n=1)
+present_value(100, r=0.05, n=2)
+```
+
+Note that the data argument is often called without the name, whereas the rest of the arguments (we can call them _parameters_) should be named. Note also how the default values are set in the definition of the function.
+
+### Arbitrary number of inputs
+
+There are some functions that take an arbitrary number of inputs. This can be achieved with the `...` keyword. Say we want to sum the squared root of an arbitrary number of numbers:
+```{r}
+sum_roots <- function(...){
+  x_sqrt <- sqrt(c(...))
+  sum_sqrt <- sum(x_sqrt)
+  print(sum_sqrt)
+}
+sum_roots(4, 9, 16)
+```
+
+### Return values
+
+The value returned by a function is typically the last statement it evaluates. However, sometimes you may want to explicitly state what the function is returning, and this is achieved with the `return` command.
+```{r}
+get_zero <- function(){
+  return(0)
+}
+
+get_zero()
+```
+The `return` command is mostly used in instances when the inputs are empty, such as above, or when there is a large `if-else` clause and we want to emphasize the values returned for legibility reasons.
+```{r}
+long_clause <- function(x){
+  if(x){
+    return('finished early')
+  }
+  # Do other stuff
+}
+result <- long_clause(TRUE)
+result
+```
+
+### Environments
+
+An understanding of environments is important in most programming languages, and it refers to whether a variable outside a function is "known" or not inside that function. In R, however, there is a rule called __lexical scoping__ that means that R will find the value associated with a name in the environment where the function was defined (and not just inside the function). This is subtle and better understood with an example:
+
+```{r}
+fun <- function(x) {
+  x + outsider
+}
+
+outsider <- 10
+fun(1)
+outsider <- 20
+fun(1)
+```
+
+This behavior is prone to bugs and should be avoided, i.e. we should not require a function to look up values outside its scope.
+
+# Data transformation with tibbles: `dyplr` basics
+## Context and purpose
+We have already seen the main properties of **tibbles** and **dataframes** (which we will treat almost indifferently) and, now that we have a better understanding of other R's capabilities, we will double-down on them for most of the rest of the course.
+
+Tibbles are fundamental for handling databases, performing analysis, building models, and performing exploratory analysis (i.e. visualization), which are the main reasons you are learning R to begin with. `dyplr` is tidyverse's library for manipulating tibbles, so we will cover it in detail.
+
+## Introduction
+
+Tibbles are great for **handling datasets**, which we can define for the moment as tabular pieces of information. We will later cover different shapes of datasets, and how we can organize "messy" data into a "tidy" form (hence "tidyverse"), but for the moment we will use tidyverse's default datasets, which are neatly organized.
+
+Let's load some bizarre mammal sleep data with the following commands:
+
+```{r}
+library(tidyverse)
+msleep
+```
+
+(You may notice that the tibble **prints in a slightly nicer way** compared to a dataframe: this is one of the advantages of tibbles).
+
+One important aspect of the tibble is that each shows the **type of variable** it stores in columns; these types can be:
+
+* `int` for integers
+* `dbl` for doubles, which are (double precision) real numbers
+* `chr` for characters
+* `dttm` for date-times
+* `lgl` for logical (also called *boolean*)
+* `fctr` for factors
+* `date` for dates
+
+## `filter()`
+### Definition
+
+`filter` allows us to subset observations based on their values. We have already done subsetting in a more manual way, so let's see how `filter` is easier by filtering only the mammals that ...:
+
+* are carnivores and belong to the order "Cetacea"
+
+* weigh more than 600 kg
+
+```{r}
+filter(msleep, vore=='carni', order=='Cetacea')
+filter(msleep, bodywt>600)
+```
+### Basic logical operations
+In order to impose logical conditions on our filtering, we need to review logical operators in R. "And" is coded as `&`, "or" is coded as `|`, "not" is coded as `!`, and "exclusive or" is coded as `xor`. We can remember the meaning of these with some Venn diagrams.
+
+![Boolean operations are achieved in R throught the | and & symbols](figures/boolean.png){width=80%}
+
+This way we can impose more complicated conditions on our filtering, e.g. fetching those mammals with either a brain heavier than 5kg or more than 22 hours of daily wakefulness:
+
+```{r}
+filter(msleep, brainwt > 5 | awake > 22)
+```
+If we want to filter only those mammals that belong to the orders "Pilosa", "Scandentia", or "Lagomorpha", the commands grows larger, but fortunately we have the `%in%` shortcut:
+
+```{r}
+filter(msleep, order=='Pilosa' | order == 'Scandentia' | order=='Lagomorpha')
+filter(msleep, order %in% c('Pilosa', 'Scandentia', 'Lagomorpha'))
+```
+### Advanced logical operators
+Logical operators are a topic on its own and we will not get into great depth, but it is worth to remember De Morgan's laws in order to simplify some expressions:
+$$
+\neg \left(A \cap B \right) = \neg A \cup \neg B
+$$
+
+and 
+
+$$
+\neg \left(A \cup B \right) = \left( \neg A \right) \cup \left( \neg B \right)
+$$
+
+![De Morgan's laws](figures/demorgan.png){width=40%}
+
+In R terms, we could write `!(A & B) = (!A | !B)` and `!(A | B) = (!A & !B)`
+
+Let's apply this to our dataset. If we want mammals whose brains weigh either more than $1 kg$ or less than $200 mg$ we can alternatively write:
+```{r}
+filter(msleep, brainwt > 1 | brainwt < 0.0002)
+filter(msleep, !(brainwt < 1 & brainwt > 0.0002))
+```
+
+A caveat here: both `&` and `|` are used in vectorized operations such as `filter`, whereas the forms `&&` and `||` are used in `if` statements.
+
+### Missing values
+Missing values may appear in other structures such as lists but are particularly important in datasets, because we will rarely have datasets where every single datapoint is fully known.
+
+A missing value in R is represented by the symbol `NA`, which stands for `Not available`. `NA`s are said to be "contagious" in the sense that almost any operation involving them also yields a `NA`:
+```{r}
+NA > 10
+'whatever' == NA
+NA / 2
+NA ** 2
+```
+
+In particular, the results of comparing two `NA` is an `NA`. This behavior may be confusing but is logically sound. When we want to check whether a value is `NA`, we need to use the `is.na()` command:
+```{r}
+NA == NA
+x <- NA
+is.na(x)
+```
+
+For our dataset, if we want to find out which mammals have an unknown dietary status we may do:
+```{r}
+filter(msleep, is.na(vore))
+```
+**EXERCISES**
+
+(1) Find all mammals that belong to order "Soricomorpha" and sleep less than 9 hours per day
+```{r include=FALSE}
+filter(msleep, order == 'Soricomorpha' & sleep_total < 9)
+```
+(2) Find all mammals that wither have more than 4 or less than 1 hours of REM sleep per day
+```{r include=FALSE}
+filter(msleep, sleep_rem > 3 | sleep_rem < 0.2)
+```
+## `arrange()`
+
+`arrange()` sorts the rows of a dataframe according to a certain criteria. You may include criteria for different columns, e.g. if we want to sort the mammals by order and then by body weight we would do:
+
+```{r}
+arrange(msleep, order, bodywt)
+```
+
+The keyword `desc` may be used to re-order a column in descending order:
+
+```{r}
+arrange(msleep, desc(order), bodywt)
+```
+
+Note that missing values are always sorted at the end. To sort them to the start, we may use `is.na()`, e.g. in order to find the rows with `NA`s in sleep_rem we may do the following:
+```{r}
+arrange(msleep, desc(is.na(sleep_rem)))
+```
+**EXERCISES**
+
+(1) Sort the `msleep` dataset by ascending alphabetical order of "order", and then by descending sleep hours.
+```{r eval=FALSE, include=FALSE}
+arrange(msleep, order, desc(sleep_total))
+```
+
+
+## `select()`
+
+Dataframes may have more columns than we are interested in: `select` allow us to "select" only those that we want to work with. For the sake of variety we will switch to the `storm` dataframe. Say that we just want to look into names and years of storms:
+```{r}
+select(storms, name, year)
+```
+We can also select all columns between two certain columns, all columns except for one or certain ones, etc.:
+```{r}
+select(storms, name:hour)
+select(storms, -(year:category))
+```
+
+`select` may be used with helper functions such as `starts_with`, `ends_with`, or `contains`.
+```{r}
+select(storms, starts_with('l'))
+select(storms, ends_with('e'))
+select(storms, contains('diameter'))
+```
+Finally, they helper `everything()` helps us reorganize the columns:
+
+```{r}
+select(storms, 'status', 'name', everything())
+```
+
+## `rename()`
+
+`rename` is self-explanatory: it just changes the name of one column while keeping the rest the same. Remember that, unless you store the resulting dataframe, the change will not be permanent.
+
+```{r eval=FALSE, include=FALSE}
+rename(storms, type_of_storm = status)
+```
+
+**EXERCISES**
+
+(1) Select all columns between `name` and `wind`, except for those that start with 'l'
+```{r eval=FALSE, include=FALSE}
+storms_1 <- select(storms, name:wind)
+select(storms_1, -starts_with('l'))
+```
+
+## `mutate`
+`mutate` is the command that allows us to add new columns in the dataset. Let's load the `painters` dataset from the `MASS` package and calculate the absolute score from 0 to 100 for a list of classic painters, based on their scores for different painting dimensions. The data is based on the judgement of an eighteenth century art critic names "de Piles".
+
+```{r}
+library('MASS')
+library('tidyverse')
+mutate(painters, score = (Composition + Drawing + Colour + Expression) * 100/80) 
+```
+
+`transmute()` is equivalent to `mutate()` except for the fact that it removes all other columns:
+```{r}
+transmute(painters,
+          score = (Composition + Drawing + Colour + Expression) * 100/80) 
+```
+
+`mutate` can be used with multiple functions, as long as they are vectorized (i.e. they must be able to take a vector of values as input). These functions may be arithmetic, like `+`, `-`, `*`, `/`, etc., modular, like `%%`, boolean, like `==`, analytical, like `log()`, or offset, like `lead()` and `lag()`. Let's run a couple of examples with the `economics` dataset included with tidyverse:
+```{r}
+library(lubridate)
+mutate(economics, pop_growth = pop - lag(pop, n=1))
+mutate(economics, year = year(date))
+```
+**EXERCISES**
+
+(1) Calculate the monthly percentage increase in the PCE (Personal Consumption Expenditures) in the `economics` dataset
+```{r eval=FALSE, include=FALSE}
+mutate(economics, pce_increase = (pce - lag(pce, n=1))/pce)
+```
+
+
+
+## `summarise()` and `groupby()`
+
+`summarise` collapses a dataframe to a single row and calculates a desired operation. E.g. if we want to calculate the average unemployment rate in the US we may do:
+```{r}
+summarise(economics, avg_pop=mean(pop))
+```
+
+You may wonder, why not just use `mean(economics$pop)`? Truth is, in this case using `summarise` is an overkill. But `summarise` becomes powerful when used in conjunction with `groupby()`, which allows to perform operations on grouped rows of the dataframe. For instance, we may want to calculate the average yearly population on the `economics` dataset:
+
+```{r}
+economics_yearly <- mutate(economics, year = year(date))
+by_year <- group_by(economics_yearly, year)
+summarise(by_year, avg_pop=mean(pop))
+```
+We will use this technique over and over when analyzing dataframes, in a similar fashion to what "pivot tables" are used for in Excel, i.e. to calculate aggregated operations on parts of a dataframe.
+
+Coming back to our `painters` example, let's see which school of painting scores better on `composition`:
+```{r}
+by_school <- group_by(painters, School)
+summarise(by_school, avg_composition=mean(Composition))
+```
+(For the artsy ones: H in this dataset is the code for the French school, coincidentally the school of the guy providing the ratings)
+
+## pipes
+In the previous example we need to define an intermediate object for the grouped data. It is not a dataframe, and it is not particularly useful, so we may want to skip that step altogether and combine the `group_by()` and the `summarise()` is just one step.
+
+This can be achieved with an operator called the `pipe`, which concatenates operators, in particular the ones we have seen for dataframes in this section. The `pipe` is built with the `%>%` command, which you may type with `Ctrl + Shift + M`. The last example that calculated the average composition rating for painters by school would be:
+
+```{r}
+painters %>% 
+  group_by(School) %>% 
+  summarise(avg_composition=mean(Composition))
+```
+The `pipe` is not just a handy shortcut, but an elegant solution that makes the code cleaner, more concise and easier to read. Although particularly useful to concatenate `group_by()` and `summarise`, it serves many other purposes.
+
+Let's load a new dataset called `heights` from package `modelr` that contains height and income data. We will filter people with a height higher than 60 inches, a weight lower than 200 pounds, we will sort by income, and then calculate their BMI (body mass index, which is equal to the weight in kg divided by the height in meters to the power of two):
+
+```{r}
+library(modelr)
+library(tidyverse)
+heights %>%
+  filter(height > 60,
+         weight < 200
+  ) %>% 
+  arrange(desc(income)) %>% 
+  mutate(bmi = weight * 0.45 / (height * 0.025)**2 )
+
+```
+
+This illustrate the power and concision of pipes, which allows us to perform several operations in just one line (even though the line is broken down for readability).
+
+# Visualizations with ggplot2
+## Introduction
+
+`ggplot2` is an R **library that allows us to generate visualizations** that are prettier and more functional than those of base R. Although it is not the only visualization library, it is the most popular one and the one we will be using moving forward. `ggplot2` is included into the `tidyverse` so we just need to load the latter, as usual.
+
+More broadly, why do we need visualization? **Graphs are useful to understand underlying relationships between variables** and gathering insights from data, particularly from large datasets. Graphs do not substitute analysis but complement it, and modern advances in visualization have made complex analyses easier to perform.
+
+![Getting used to ggplot2 will bring compounding benefits moving forward](Figures/buff_doge.jpeg){width=50%}
+
+## Aesthetics mappings
+
+The general form of a `ggplot` statement is as follows:
+
+`ggplot(data = <DATA>) + <GEOM_FUNCTION>(mapping=aes(<MAPPINGS>))`
+
+Let's start with the dataframe `msleep` and try to see the **relationship between the weight of the brain of a mammal and the amount of hours it sleeps**. We need to load the dataframe with `ggplot` and then define a scatterplot with `geom_point`; these two command are similar to layers that get combined by means of the `+` operator.
+
+```{r}
+ggplot(data=msleep) +
+  geom_point(mapping = aes(x=sleep_total, y=brainwt))
+```
+
+The `aes` function gathers together each of the aesthetic mappings; "aesthetics" are just visual properties that you can map to variables to display information about the data. In the case of `x` and `y`, the locations of the point are themselves aesthetics.
+
+It seems most animals have brains that are quite small, so we cannot see a clear relationship. A logarithmic scale will help, so let's add that with the `scale_y_log10` command.
+
+```{r}
+ggplot(data=msleep) +
+  geom_point(mapping = aes(x=sleep_total, y=brainwt)) +
+  scale_y_log10()
+```
+Interestingly, it seems that animals with smaller brains tend to sleep more hours. We can check if the relationship holds by differentiating the animal orders by color.
+
+```{r}
+ggplot(data=msleep) +
+  geom_point(aes(x=sleep_total, y=brainwt, color=order)) +
+  scale_y_log10()  
+```
+By know you may have noticed that we are adding layers with visual information one of top of each other. We can move some of this information to the first layer (this is called "creating global mappings") and then add a new layer with labels for each point.
+```{r}
+ggplot(data=msleep, aes(x=sleep_total, y=brainwt)) +
+  geom_point(aes(color=order)) +
+  geom_text(aes(label=name)) +
+  scale_y_log10()  
+```
+
+We need to be frugal with the amount of information we convey on a graph, because otherwise the graph will become too crowded.
+
+Another graphical element that helps us differentiate categories is the shape of the marker; let's try it with the `vore` category.
+
+```{r}
+ggplot(data=msleep, aes(x=sleep_total, y=brainwt)) +
+  geom_point(aes(shape=vore)) +
+  scale_y_log10()  
+```
+
+Alternatively, we can also control the transparency of the points with the `alpha` aesthetic:
+
+```{r}
+ggplot(data=msleep, aes(x=sleep_total, y=brainwt)) +
+  geom_point(aes(alpha=vore)) +
+  scale_y_log10()  
+```
+
+One graphical element that allows us to introduce an additional numerical variable in the graph is `size`. For instance, if we want to add the bodyweight information on our plot we would do:
+
+```{r}
+ggplot(data=msleep, aes(x=sleep_total, y=brainwt)) +
+  geom_point(aes(color=order, size=bodywt)) +
+  scale_y_log10()  
+```
+
+As expected, animals with the largest brains are also the heaviest.
+
+## Facets
+
+Facets are another way to split plots by categorical variables, generating subplots that display subsets of data. Let's look at a new dataframe, `txhousing`, and explore a relationship between the median price of a house and the date, for several cities. We will first filter the dataframe by a few cities in order to make the amount of information manageable.
+
+```{r}
+ggplot(data=filter(txhousing, city %in% c('Bay Area', 'Austin',
+                                          'El Paso', 'Wichita Falls')),
+       aes(x=date, y=median)) +
+  geom_point() +
+  facet_wrap(~city, nrow=1)
+```
+We can extract several insights. First, it is clear that some cities have higher prices than others. Second, we can see the price increase with time, with some ebbs and flows like the bursting of the housing bubble around 2008.
+
+So far we have been plotting what are known as "scatterplots", which are plots where each datapoint is an individual point. Time series data can also be represented with lines (although be aware that we are ultimately still representing points). One step further is to smoothen the representation with an approximated curve.
+
+```{r}
+ggplot(data=filter(txhousing, city %in% c('Bay Area', 'Austin', 'El Paso', 'Wichita Falls')),
+       aes(x=date, y=median)) +
+  geom_line() +
+  facet_wrap(~city, nrow=1)
+```
+
+```{r}
+ggplot(data=filter(txhousing, city %in% c('Bay Area', 'Austin',
+                                          'El Paso', 'Wichita Falls')),
+       aes(x=date, y=median)) +
+  geom_smooth() +
+  facet_wrap(~city, nrow=1)
+```
+
+Remember that we can use colors, facets, linetypes, etc. interchangeably in order to present the data in the way we think is more clear.
+```{r}
+ggplot(data=filter(txhousing, city %in% c('Bay Area', 'Austin',
+                                          'El Paso', 'Wichita Falls')),
+       aes(x=date, y=median)) +
+  geom_smooth(aes(color=city)) +
+  geom_point(aes(color=city))
+```
+
+## Statistical transformations
+
+`ggplot` has functionalities beyond pure visualization: it incorporates some aggregated calculations similar to `group_by` and `summarise` without explicitly invoking them. We will use the `starwars` dataset which contains data about the characters in the franchise. First, let's look how many characters do we have from each planet. We will add the command `coord_flip` to make the bars horizontal and therefore more readable.
+
+```{r}
+ggplot(data=starwars) +
+  geom_bar(mapping=aes(x=homeworld)) +
+  coord_flip()
+```
+
+`geom_bar` is internally counting how many rows each planet has, and then displaying the information for us; this is convenient because it prevents us from having to do the internal calculation explicitly. We can add a `fill` attribute to the layer to differentiate how many of those characters are male or female.
+
+```{r}
+ggplot(data=starwars) +
+  geom_bar(mapping=aes(x=species, fill=gender)) +
+  coord_flip()
+```
+We can get more creative with dimensions such as `hair_color` and `gender`, placing the bars beside one another.
+
+```{r}
+ggplot(data=starwars) +
+  geom_bar(mapping=aes(x=hair_color, fill=gender), position='dodge') +
+  coord_flip()
+```
+`ggplot` also offers many operations beyond pure counting of rows. One useful plot to summarise statistical properties of a variable is the boxplot: let's see how to apply it to the height of characters by eye color:
+
+```{r}
+ggplot(data=starwars) +
+  geom_boxplot(mapping=aes(x=eye_color, y=height)) +
+  coord_flip()
+```
+
+## EDA: a case study on airlines
+
+*Exploratory analysis*, also called EDA, is the name for the joint use of plots and data wrangling that is performed in order to get insights about a dataset before building a model.
+
+In order to move to a more realistic example where we can perform some exploratory analysis, let's load the libraries that provides access to the web "FiveThirtyEight" and explore the `airline_safety` dataset.
+
+You may find a full article related to this dataset [here](https://fivethirtyeight.com/features/should-travelers-avoid-flying-airlines-that-have-had-crashes-in-the-past/)
+
+We will also use the `pipe` in order to combine graphs and data transformations in an agile way:
+
+```{r}
+#install.packages('fivethirtyeight')
+library('fivethirtyeight')
+airline_safety %>% View()
+airline_safety %>% glimpse()
+```
+
+Let's check if there is a relationship between the available seat-km's per week, and the number of incidents (intuitively, there should be a proportionality). We will colorize those airlines that include regional subsidiaries.
+
+```{r include=FALSE}
+ggplot(data=airline_safety) +
+  geom_point(aes(x=avail_seat_km_per_week,
+                 y=incidents_85_99,
+                 color=incl_reg_subsidiaries)) +
+  scale_y_log10() + 
+  scale_x_log10()
+```
+The `pipe` allows us to use a slightly different syntax that will prove useful later on:
+```{r}
+airline_safety %>% ggplot() +
+  geom_point(aes(x=avail_seat_km_per_week,
+                 y=incidents_85_99,
+                 color=incl_reg_subsidiaries)) +
+  scale_y_log10() + 
+  scale_x_log10()
+```
+
+There seems to be a weak relationship, but it seems unfair to compare incidents of airlines with large seats-km to airlines with few seats-km, so let's build a `normalized_incidents_85_99` function and then plot it, all in one step:
+```{r}
+airline_safety %>%
+  mutate(normalized_incidents_85_99=incidents_85_99/avail_seat_km_per_week) %>% 
+  ggplot(aes(x=avail_seat_km_per_week, y=normalized_incidents_85_99)) +
+  geom_label(aes(label=airline, color=incl_reg_subsidiaries)) +
+  scale_x_log10() +
+  scale_y_log10()
+```
+Interestingly, the more seat-km an airline flies, the safer it becomes. Also, having subsidiaries seems not to be bad (maybe this is just a proxy for larger airlines).
+
+In general we should be careful to infer causality from these relationships (this topic is called "causal inference" and is a whole subject on its own right), but we can see the usefulness of plots to unveil relationships, whether they are causal or not.
+
+## EDA: a case study on college majors
+
+Now we will work with the `college_all_ages` dataset, which provides information on different college majors. Let's see how many majors are there by category; for this we will use `geom_bar` and will position the labels vertically thanks to the `theme` command.
+
+```{r}
+college_all_ages %>%
+  ggplot() +
+  geom_bar(aes(x=major_category)) +
+  theme(axis.text.x=element_text(angle=90))
+```
+Behind the scenes `ggplot` is just using the `count` command like this:
+```{r}
+college_all_ages %>% 
+  count(major_category)
+```
+
+A type of plot that is particularly useful for continuous variable is the histogram. For instance, we may be interested in understanding which is the distribution of unemployment rate for the whole population of majors.
+
+```{r}
+college_all_ages %>%
+  ggplot() +
+  geom_histogram(mapping=aes(x=unemployment_rate), binwidth = 0.01)
+```
+
+A histogram divides the x axis into equally spaced bins and uses the height of the bars to display the number of observations that fall on each of those bins. The parameter `binwidth` allows us to control the fineness of our distribution:
+```{r}
+college_all_ages %>%
+  ggplot() +
+  geom_histogram(mapping=aes(x=unemployment_rate), binwidth = 0.002)
+```
+
+The function `geom_freqploy` allows us to differentiate by color:
+```{r}
+college_all_ages %>%
+  ggplot(aes(x=unemployment_rate, fill=major_category, color=major_category)) +
+  geom_histogram(alpha=0.2, position='identity',binwidth = 0.01)
+```
+Note that the histograms here overlap one another thanks to the `position` keyword; alternatively we could "stack" them:
+
+```{r}
+college_all_ages %>% 
+  ggplot(aes(x=unemployment_rate, fill=major_category)) +
+  geom_histogram(binwidth = 0.01)
+```
+How useful are these plots? Not terribly useful. We can extract the intuition that social sciences and psychology graduates endure higher unemployment rates, but not much more than that. A better alternative for combining categorical and continuous variables are **boxplots**:
+```{r}
+college_all_ages %>% 
+  ggplot(aes(y=major_category, x=unemployment_rate)) +
+  geom_boxplot()
+```
+To make the insight more clear, we can sort the boxplots by unemployment rate:
+```{r}
+college_all_ages %>% 
+  ggplot() +
+  geom_boxplot(aes(y=reorder(major_category, unemployment_rate, FUN='median'),
+                   x=unemployment_rate))
+```
+
+We can make a final check on unemployment rates and median compensation (which should be inversely correlated, and indeed are, albeit weakly). The outliers in Arts, Engineering, Education and a few others are easily identifyable.
+
+```{r}
+college_all_ages %>% 
+  ggplot() +
+  geom_point(aes(x=unemployment_rate, y=median, color=major_category))
+```
+
+
+Note that the dataset has one row per major, so these are statistics *per major*, i.e. each dot in the plot is a major, not a graduate. This is a limitation of the dataset, but the concept and way of working holds.
+
+![How boxplots and histograms are close cousins](Figures/eda-boxplot.png)
+
+That being said, boxplots are more compact and clear than histograms when dealing with a combination of categorical and continuous variables. We can see how they relate to each other in the included diagram.
+
+
+## EDA: a case study on flight delays
+
+We will now explore heatmaps, which are no more than a way to display a continuous variable through color at the same time that we display two categorical variables.
+
+For this example we will require the `nycflights13` package.
+
+```{r}
+# install.packages('nycflights13')
+library(nycflights13)
+```
+
+```{r}
+flights %>% 
+  ggplot(aes(x=carrier, y=origin)) +
+  geom_tile(aes(fill=air_time))
+```
+
+We can check the names of the carriers in the dataframe `airlines` and get some insights. For instance, it seems that Frontier Airlines only operates from La Guardia, whereas Delta has its longer flights from JFK and its shorter flights from Newark.
+
+Closely related to heatmaps are "hexagonal bin" plots, which generalize the heatmap to situations where all variables are continuous. Let's say we want to see the relationship between the number of flights and with the combination of `arr_delay` and `dep_delay`.
+
+```{r}
+# install.packages("hexbin")
+# library(hexbin)
+flights %>% 
+  ggplot() +
+  geom_hex(aes(x=arr_delay, y=dep_delay))
+```
+The insights here is that, while there is a long tail of largely delayed flights, most flights are not delayed (light blue spot in the origin), and there is no additional delay on top of the departure delay (i.e. the time on air is not stretched, which makes sense).
+
+# Pivoting and relational data
+
+## Tidy dataframes
+
+Dataframes may contain data in different formats, not all of which are equally easy to use. Let's look into `table1`, `table2`, etc., which are default dataframes loaded with tidyverse that contain information on tuberculosis cases worldwide:
+
+```{r}
+library(tidyverse)
+table1
+table2
+table4a
+table4b
+```
+These dataframes have the same information (although `table4a` and `table4b` would need to be combined) but `table1` is the "tidiest", in the sense that it is the easiest to work with. This is because it has the properties of a "tidy" dataframe:
+
+* Each variable has its own colum
+* Each observation has its own row
+* Each value has its own cell
+
+![Properties of a tidy dataframe](Figures/tidy.png)
+
+Tidy data leverages on the power of tools we have seen, like `dyplr`, and others we will see, like `ggplot2`:
+```{r}
+library(tidyverse)
+table1 %>%
+  mutate(cases_per_person = cases / population) %>% 
+  arrange(desc('cases_per_person'))
+```
+
+Note that this would not be possible with `table2` or the others.
+
+## Pivoting
+Often, we will encounter data that is not tidy, and we will need to transform it in order to be able to work efficiently.
+
+One common issue is to have column names that are not names of variables, but values of a variable, like in `table4a`, where each column represents one year.
+
+This can be fixed with `pivot_longer` and `pivot_wider`, (formerly known and `spread` and `gather`):
+
+```{r}
+table4a
+table4a %>%
+  pivot_longer(c(`1999`, `2000`), names_to='year', values_to='cases')
+```
+Note the use of the backtick `\`` in order to provide names of columns that do not conform to good practices (in this case, a number should be a column name).
+
+![Pivoting a dataframe into a longer form](Figures/tidy_longer.png)
+```{r}
+table4b
+```
+The opposite of `pivot_longer` is `pivot_wider`, which is useful when we have a column that mixes two different type of values:
+```{r}
+table2
+table2 %>% 
+  pivot_wider(names_from=type, values_from=count)
+```
+
+![Pivoting a dataframe into a wider form](Figures/tidy_wider.png)
+
+`pivot_longer` and `pivot_wider` are important enough for us to linger a bit here. Let's work on this example:
+
+```{r}
+stocks <- tibble(
+  year   = c(2015, 2015, 2016, 2016),
+  half  = c(   1,    2,     1,    2),
+  return = c(1.88, 0.59, 0.92, 0.17)
+)
+stocks
+```
+
+If we want to treat the year half (column `half`) as separates columns, we need to do:
+
+```{r}
+stocks %>% 
+  pivot_wider(names_from = half, values_from = return)
+```
+
+If we want to get back to the original shape, we can do so with `pivot_longer`:
+
+```{r}
+stocks %>% 
+  pivot_wider(names_from = half, values_from = return) %>% 
+  pivot_longer(cols=c(`1`, `2`), names_to = "half", values_to = "return")
+```
+Finally, let's learn a trick to declare small tables quickly: the `tribble` command. It allows us to declare tibbles row-wise instead of column-wise.
+```{r}
+stocks <- tribble(
+  ~year, ~half, ~return,
+  #-----|----|-------
+  2015, 1, 1.88,
+  2015, 2, 0.59,
+  2016, 1, 0.92,
+  2016, 2, 0.17
+)
+```
+
+## `separate` and `unite`
+
+### `separate`
+
+`separate` pulls apart one column into multiple columns; it requires that we specify the separator character. We will use the dataset `bob_ross`, which is included in the library `fivethirtyeight` and describes the TV episodes of a divulgative series on painting by painter Bob Ross.
+
+```{r}
+library(fivethirtyeight)
+head(bob_ross)
+```
+
+```{r}
+bob_ross %>% 
+  separate(episode, into=c('season_code', 'episode_code'), sep='E')
+```
+
+`separate` is useful not only with characters but sometimes also with numerical data; let's split the `rate` column of `table3` into `cases` and `population`. In this case, because the separator is a special character, we do not need to specify it.
+
+```{r}
+table3 %>% 
+  separate(rate, into=c('cases', 'population'))
+```
+
+Note the the new columns are still treated as integers. If we want `separate` to convert the separated columns to their right variable type, we can do so with the `convert` keyword. 
+
+```{r}
+table3 %>% 
+  separate(rate, into=c('cases', 'population'), convert=TRUE)
+```
+
+### Unite
+
+`unite` is the inverse of `separate`: it takes multiple columns and combines them into a single one. In the `bob_ross` dataframe we can unite the `season` and `episode_num` columns into a single one. The default separator is the underscore, but we can specify whichever we want.
+
+```{r}
+bob_ross %>% 
+  unite(new_column, season, episode_num, sep = '-')
+```
+
+## Relational data
+
+### Introduction
+
+Loosely speaking, **relational data** is data that is organized into one or more tables. This is a huge topic on its own and beyond the scope of the course, so we will only scratch the surface of it. R and, particularly, the tidyverse, has useful tools for dealing with relational data, and we will cover the most useful ones. For larger databases, **tools like SQL** are used, and they would require a course on its own.
+
+Relational data is, as mentioned before, not more than data stored into tables. It is often the case that one table does not have all the information that we would like, so we need to **combine different tables**. For instance, in the `flights` dataset we did have a code for the airline but we needed to check the actual name into a separate table called `airlines`. We don't we just combine those two tables to have all the information into one? This is called a `join`.
+
+```{r}
+flights %>% 
+  left_join(airlines, by='carrier')
+```
+
+There are some important elements here to note:
+
+* `by` is a keyword that specifies the column or **key** by which we want to join the two tables; therefore this column needs to appear in both datasets
+
+* in this case we only need one **key** to identify an airline, but we will see examples where we perform joins by several columns
+
+* we say that `carrier` is a **primary key** in `airlines` because it only appears once per row; `airlines` in `flights` is a foreign column because it appears in several rows
+
+* `left_join` is the command to join the two tables... why `left`? Because we are taking the first dataset as a a reference and preserving its rows, just suplementing them with the columns from `airlines` when applicable; we will get into more detail on this soon
+
+The `flights` dataset has a number of related datasets that can complement its information: the figure below shows them all.
+
+![Relational data means the data is scattered across several tables](Figures/relational-nycflights.png)
+
+### Primary keys
+
+Before performing a join (let's think of a `left_join` for the moment), it is critical to understand which are the primary keys of our dataset. For that we can use the `count` command and then filter if each value in a column has more than one occurence; if yes, then it is not a primary key. 
+
+Let's check that the `airlines` dataset has both `carrier` and `name` as primary keys:
+
+```{r}
+airlines %>% 
+  count(carrier) %>% 
+  filter(n>1)
+
+airlines %>% 
+  count(name) %>% 
+  filter(n>1)
+```
+
+
+If we try to find a primary key in the `flights` dataset, there does not seem to be one. But maybe a combination of date and flight number suffices?
+
+```{r}
+flights %>% 
+  count(year, month, day, flight) %>% 
+  filter(n>1)
+```
+Unfortunately, it doesn't: it seems that there are flights with the same flight number even within the same day. Same happens with `tailnum`, which is an identifier for the aircraft:
+
+```{r}
+flights %>% 
+  count(year, month, day, tailnum) %>% 
+  filter(n>1)
+```
+
+In this case, it is better to create a primary key ourselves with the `row_number` command:
+
+```{r}
+flights %>% 
+  mutate(flight_id=row_number()) %>% 
+  filter(n>1)
+```
+
+### Joins
+
+A primary key and its corresponding foreigh key form a relation; relations are typically one-to-many, like in the `airlines` example: `carrier` is a primary key in `airlines`, where each value appears only once, and a foreign key in `flights`, where its value appears several times.
+
+The way we handle these relationships will determine the type of `join` we have; there are four classic types of joins: the `left_join`, the `right_join`, the `inner_join`, and the `full_join`.
+
+To representate the joins visually, we first can draw two datasets with two keys each: the colored column is the primary key, whereas the gray column is the "value" that is carried along. The key variable contains different values ($1, 2, ...$).
+
+```{r}
+demographics <- tribble(
+  ~country, ~population,
+  #--------#-----------
+  'Spain', 47,
+  'Colombia', 51,
+  'Norway', 5,
+  'US', 333
+)
+```
+
+```{r}
+geography <- tribble(
+  ~country, ~continent,
+  #--------#-----------
+  'Spain', 'Europe',
+  'Colombia', 'South America',
+  'China', 'Asia',
+  'Japan', 'Asia'
+)
+```
+
+
+![Visual representation of two tables to be joined](Figures/join-setup.png)
+
+When we join two datasets, we are looking at the potential intersections between the values of the keys.
+
+![Each intersection is a potential match](Figures/join-setup2.png)
+
+The inner join matches pairs of observations whenever their keys are equal, and discards the rest. This is dangerous in general because we lose control of the information that we are missing. In our example this means:
+
+```{r}
+demographics %>% 
+  inner_join(geography, by='country')
+```
+
+![The inner join](Figures/join-inner.png)
+
+The `left_join` preserves the observations on the first dataframe, whereas the `right_join` preserves the observations on the second dataframe.
+
+```{r}
+demographics %>% 
+  left_join(geography, by='country')
+```
+
+```{r}
+demographics %>% 
+  right_join(geography, by='country')
+```
+Finally, the `full_join` keeps the information in both dataframes:
+
+```{r}
+demographics %>% 
+  full_join(geography, by='country')
+```
+
+The `left_join`, `right_join`, and `full_join` are often called "outer_joins", because they share the property of filling out the missing observations with virtual observations carrying `NAs`.
+
+![The left, right and full join](Figures/join-outer.png)
+
+### Duplicate keys
+
+It may be the case that one or both tables have duplicated keys. If only one has duplicated keys, it is typically not a problem:
+
+```{r}
+language <- tribble(
+  ~country, ~language,
+  #--------#-----------
+  'Spain', 'Spanish',
+  'Colombia', 'Spanish',
+  'Norway', 'Norweigian',
+  'US', 'English',
+  'Switzerland', 'German',
+  'Switzerland', 'French'
+)
+```
+
+```{r}
+language %>% 
+  left_join(demographics, by='country')
+```
+
+![One table has duplicated keys](Figures/join-one-to-many.png)
+
+However, when the two tables have duplicated keys we need to be mindful that we will obtain all possible combinations - this is commonly called the Cartesian product.
+
+![Both tables have duplicated keys](Figures/join-many-to-many.png)
+
+```{r}
+borders <- tribble(
+  ~country, ~neighbor,
+  #--------#-----------
+  'Spain', 'France',
+  'Spain', 'Portugal',
+  'Switzerland', 'Germany',
+  'Switzerland', 'France',
+  'Switzerland', 'Austria',
+  'Switzerland', 'Italy'
+)
+```
+
+```{r}
+language %>% 
+  left_join(borders, by='country')
+```
+
+# Solving equations
+
+## Introduction
+
+Many problems in statistics and math involve solving the roots of a polynomial or, more generally, the zeros of a function. R is well-equipped to solve these type of problems.
+
+## Root finding in single equations
+
+The `uniroot` function can search a specified interval for a root of the target function $f$ with respect to its first argument. It requires us to provide a lower and upper bound of an interval such that $f(u)f(l)<0$. Assume we want to find the roots of the following function:
+
+$$
+f(x) = x^2 - 2x - 3 = 0
+$$
+We know that e.g. $x=0$ will yield a negative value of $f$ whereas $x=10$ will yield a positive value of $x$. If the function is continuous, there must be a root somewhere in the middle. Let's see if `uniroot` finds it:
+
+```{r}
+f <- function(x){x**2 - 2*x - 3}
+uniroot(f, lower=0, upper=10)
+```
+It did find $x_0 = -3$, with just 8 iterations. Nice!
+
+How many roots does $f$ actually have? `uniroot` cannot tell it, but since it is a second-order polynomial we know it has at most two, and we know $x=-10$ yields a negative value of $f$, so the other root we have not yet found must be between $-10$ and $0$:
+
+```{r}
+uniroot(f, lower=-10, upper=0)
+```
+
+So we can conclude that $x_1=-1$.
+
+Does `uniroot` work with non-derivable functions?
+
+$$
+g(x) = |1-x^2| - 1 = 0
+$$
+We can easily check that there is a sign change between g(-10) and g(1):
+```{r}
+g <- function(x){abs(1-x^2)-1}
+uniroot(g, lower=-10, upper = 1)
+```
+
+So $x_0=-1.4142$, which should be familiar and is equal to the $-\sqrt(2)$. Besides, $x_1=0$ is a root that in this case we could have solved visually. Let's try to find the other root:
+```{r}
+uniroot(g, lower=0.5, upper = 10)
+```
+
+So $x_2=1.4142$, which is actually $\sqrt(2)$.
+
+Is there a way to find all the roots with no need to look at intervals of sign change? In the case of polynomial functions, yes:
+
+$$
+f(x) = x^2 - 2x - 3 = 0
+$$
+
+```{r}
+polyroot(c(-3, -2, +1))
+```
+
+Another advantage of `polyroot` is that it works also when the roots are complex numbers:
+
+$$
+h(x) = x^2 + x + 1 = 0
+$$
+```{r}
+polyroot(c(1,1,1))
+```
+
+
+## Root finding in systems of linear equations
+
+When we covered matrices, we mentioned that they are useful to solve systems of linear equations. Let's refresh that concept with an example:
+
+$$
+x_1 - x_2 = 2
+$$
+
+$$
+2 x_1 + 2 x_2 = 1
+$$
+
+
+This is equivalent to:
+$$
+A \cdot x = b
+$$
+where:
+
+$$
+A = \begin{pmatrix}
+1 & -1 \\
+2 & 2 \\
+\end{pmatrix}
+$$
+
+$$
+b = \begin{pmatrix}
+2 \\
+1 \\
+\end{pmatrix}
+$$
+
+The solution to this system of linear equations can be achieved by doing:
+$$
+x = A ^{-1} \cdot b
+$$
+This can all be achieved through base R, but the library `matlib` allows for some nice plotting and beautification of results:
+
+```{r}
+library(matlib)
+A = matrix(c(1,2, -1, 2), nrow = 2)
+b = matrix(c(2, 1), nrow = 2)
+plotEqn(A,b)
+```
+```{r}
+x = solve(A, b)
+x
+```
+
+## Root finding in systems of non-linear equations
+
+A system of non-linear equations cannot be expressed as simply a matrix multiplying a vector. We need a package such as `rootSolve` to solve systems like this one:
+
+$$
+G(x_1, x_2) = \begin{pmatrix}
+x_1^2 + x_2^2 -1 \\
+x_1^2 - x_2^2 + 1 \\
+\end{pmatrix} =
+\begin{pmatrix}
+0 \\
+0 \\
+\end{pmatrix} 
+$$
+We just need to define the equations and to provide an initial point for the iteration to begin (we will try with $x_0=1$ and $x_1=1$):
+```{r}
+#install.packages('rootSolve')
+library(rootSolve)
+G <- function(x){c(x[1]^2 + x[2]^2 - 1, x[1]^2 - x[2]^2 + 1)}
+multiroot(G, start=c(1,1))
+```
+
+# Data tables
+
+## Introduction
+
+Data tables are a powerful tool to deal with datasets. They present an alternative approach to that of the tidyverse and have a better performance at the expense of a more complicated syntax. We will cover them only superficially.
+
+## Basics of data tables
+
+Let's build our first data table:
+
+```{r}
+library(data.table)
+dt_cities <- data.table(
+  city=c('madrid', 'paris', 'tokyo', 'bogota', 'barcelona', 'medellin'),
+  pop=c(7, 11, 37, 11, 5, 3),
+  country=c('spain', 'france', 'japan', 'colombia', 'spain', 'colombia')
+)
+dt_cities
+```
+
+We already see that the table is slightly different to the one we obtain in a conventional dataframe. The changes come with the syntax though. The general form of a `data.table` syntax is as follows:
+
+`DT[i, j, by]`
+
+which reads "take `DT`, subset/reorder rows using `i`, then calculate `j`, grouped by `by`.
+
+Let's explore this with the `nycflights13` library that we discussed in previous lessons. We will transform it into a `data.table` and extract the first two columns:
+
+```{r}
+library(nycflights13)
+dt <- data.table(flights)
+dt[1:2]
+```
+This is already different from the syntax we are used to: subsetting here is referring to rows.
+
+Now let's filter only the rows with flights that depart from JFK and occur in June:
+
+```{r}
+dt[origin=="JFK" & month==6]
+```
+
+As we see, the syntax is more compact and less explicit than with the `tidyverse`. Let's now sort the `flights` by column `origin` in descending order and then by `dest` in ascending order:
+
+```{r}
+dt[order(-origin, dest)]
+```
+
+Selecting columns requires a comma (remember the general model `DT[i, j, by]` and returns a vector:
+```{r}
+dt[1:10, sched_arr_time]
+```
+If we want to retrieve a `data.table`, we need to put the columns in a list:
+```{r}
+dt[, list(sched_dep_time, sched_arr_time)]
+```
+
+We can use a vector instead of a list, but we need to put the column names inside quotes then:
+
+```{r}
+dt[, c('sched_dep_time', 'sched_arr_time')]
+```
+
+
+ 
+Alternatively, a `.()` also works:
+```{r}
+dt[, .(sched_dep_time, sched_arr_time)]
+```
+
+If the columns are stores in a variable, then we need the `..` prefix:
+```{r}
+select_cols <- c('sched_dep_time', 'sched_arr_time')
+dt[, ..select_cols]
+```
+
+
+Renaming is quite fast, too:
+```{r}
+dt[, .(scheduled_departure=sched_dep_time, scheduled_arrival=sched_arr_time)]
+```
+
+`data.table` handles not only columns but expressions, e.g. if we wanted to count how many flights have negative total delay we would do:
+```{r}
+dt[, sum((arr_delay + dep_delay)>0, na.rm = TRUE)]
+```
+
+We can combine the subsetting in `i` with the expression evaluation in `j` to, e.g., calculate the average arrival and departure delay for all flights with origin JFK in June:
+
+```{r}
+dt[origin=='JFK' & month==6, .(mean_arr=mean(arr_delay, na.rm=TRUE), mean_dep=mean(dep_delay, na.rm=TRUE))]
+```
+This syntax is not only compact but also computationally efficient, because the query, having all the elements simultaneously instead of sequentially, is optimized before evaluation.
+
+A common operation is to count how many rows comply with certain condition. E.g. we can count how many flights have been made in 2013 from LGA airport:
+```{r}
+dt[origin=='LGA' & year=='2013', length(day)]
+```
+
+where the column in `day` could have been any one. Since this is a bit arbitrary, `data.table` has a built-in variable to achieve this, which is `.N`:
+
+```{r}
+dt[origin=='LGA' & year=='2013', .N]
+```
+
+## Aggregation
+
+The syntax of `data.table` allows for easy aggregations. E.g. if we want to count how many flights depart from each airport we can do:
+
+```{r}
+dt[, .N, by=.(origin)]
+```
+
+We can precede this aggregation with a filter, e.g. taking only flights from American Airlines:
+```{r}
+dt[carrier=='AA', .N, by=origin]
+```
+
+Grouping does not need to be limited to just one column:
+```{r}
+dt[carrier=='AA', .N, by=.(origin, dest)]
+```
+
+We can for instance calculate the average arrival and departure delay for each pair `origin, dest` for each month for American Airlines flights:
+
+```{r}
+dt[carrier=='AA', .(mean(arr_delay, na.rm=TRUE), mean(dep_delay, na.rm=TRUE)), by=.(origin, dest, month)]
+```
+
+A minimal change, substituting `by` by `keyby`, sorts the output:
+```{r}
+dt[carrier=='AA', .(mean(arr_delay, na.rm=TRUE), mean(dep_delay, na.rm=TRUE)), keyby=.(origin, dest, month)]
+```
+
+We can also chain operations as we did with the `pipe` before. E.g. this:
+
+```{r}
+dt[1:10, .(sched_arr_time)]
+```
+can also be done in two steps:
+```{r}
+dt[1:10,][,.(sched_arr_time)]
+```
+This is a trivial example, but chaining commands is a very powerful tool as we saw with `pipe`.
+
+## Subset of data
+
+`data.table` has a special symbol called `.SD`, which stands for `subset of data`. It is a `data.table` itself that holds the data for the current group defined using `by`.
+
+```{r}
+dt_cities[, print(.SD), by = country]
+```
+We can see that `.SD` contains all the columns except for the grouping columns. It allows us to compute statistics on multiple columns:
+```{r}
+dt[, lapply(.SD, mean), by=.(carrier, tailnum, origin, dest)]
+```
+
+The problem with this approach is that we usually do not want to calculate the statistics for all the columns, but for a subset. To fix that we do:
+
+```{r}
+dt[carrier=='AA', lapply(.SD, mean), by=.(origin, dest, month),
+   .SDcols=c('arr_delay', 'dep_delay')]
+```
+
