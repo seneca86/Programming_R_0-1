@@ -47,7 +47,7 @@ What follows apply both for P0 and PI:
 |-----------|-----------|------------|---------------------|
 | P0 | S1 + S2 | Lecture | Jan 11th 2022 |
 | P0 | S3 + S4 | Lecture | Jan 18th 2022 |
-| P0 | S5 + S6 | Lecture | Feb 1st 2022 |
+| P0 | S5 + S6 | Lecture | Jan 25st 2022 |
 | P0 | S7 + S8 | Lecture | Feb 8th 2022 |
 | P0 | S9 + S10 | Lecture | Feb 22th 2022 |
 | PI | S1 + S2 | Lecture | Mar 1st 2022 |
