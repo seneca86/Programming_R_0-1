@@ -311,11 +311,6 @@ for (n in (1:6)){
 
 # Vectors
 
-## Algebra refresher
-
-![Algebra refresher (1/2)](Figures/algebra_1.png)
-
-![Algebra refresher (2/2)](Figures/algebra_2.png)
 
 ## Introducing vectors
 
@@ -343,7 +338,7 @@ a <- seq(from=1, to=20.5, by=4.5)
 length(a)
 ```
 
-![Please fill out the poll](Figures/poll.jpeg){width=30%}
+![Please try it](Figures/poll.jpeg){width=30%}
 
 Calculate how many intervals of three units are there between $2^{10}$ and $2^{11}$.
 
@@ -630,8 +625,6 @@ cbind(B,C)
 
 ## Performing arithmetic with arrays
 
-![It will take us a bit longer](Figures/neo.jpeg){width=50%}
-
 The standard arithmetic operators work element-wise on matrices, given they are the appropriate size.
 ```{r}
 B
@@ -730,7 +723,7 @@ solve(D)
 
 Declare a 3x3 matrix whose elements are zero in the diagonal and one elsewhere, and calculate the determinant of its inverse
 
-![Please fill out the poll](Figures/poll.jpeg){width=30%}
+![Please try it](Figures/poll.jpeg){width=30%}
 
 Declare a 3x3 matrix whose elements are zero in the diagonal and one elsewhere, and calculate the determinant of its inverse.
 
@@ -754,8 +747,6 @@ det(solve(ones(3)-eye(3)))
 
 # Lists
 ## Introducing lists
-
-![We will cover lists and proceed to forget about them](Figures/escobar.jpeg){width=50%}
 
 A list is a generalization of a vector that allows for elements of different types — lists are created with the “list” function.
 Indeed, in R vectors are actually referred to as “atomic” vectors and lists as “recursive” vectors, so the term “vector” can be applied both to atomic vectors and to lists — _recursive_ denotes the fact that a list can contain other variables, including lists.
@@ -820,7 +811,7 @@ What is the correct _list_ metaphor for each image?
 
 ![A metaphor for a list](Figures/pepper.png){width=80%}
 
-![Please fill out the poll](Figures/poll.jpeg){width=40%}
+![Please try it](Figures/poll.jpeg){width=40%}
 
 ![A metaphor for a list - solved](Figures/pepper_solved.png){width=50%}
 
@@ -874,7 +865,7 @@ Let’s run an exercise using what we learnt about samples.
 
 ![A visual representation of our generated sample](Figures/gold.png){width=50%}
 
-![Please fill out the poll](Figures/poll.jpeg){width=30%}
+![Please try it](Figures/poll.jpeg){width=30%}
 ```{r}
 set.seed(1)
 chest <- c(rep('gold', 20),
@@ -890,7 +881,6 @@ sum(drawn=='gold')
 
 # Dataframes
 ## Introducing dataframes
-![Soon we will be using dataframes more than any other type of variable](Figures/dust_doge.jpeg){width=50%}
 
 With what we have learned, let’s generate some data for ten fictitious companies and wrap them together in a new type of variable, a dataframe.
 ```{r}
@@ -1161,7 +1151,7 @@ writeLines(sub_sentence)
 
 What does the narrator say between positions 21 and 22?
 
-![Please fill out the poll](Figures/poll.jpeg){width=30%}
+![Please try it](Figures/poll.jpeg){width=30%}
 
 ```{r}
 writeLines(word(moby_dick, start=21, end=22))
@@ -1264,7 +1254,7 @@ raise_to_the_power <- function(x, y) {
 raise_to_the_power(2, 5)
 ```
 
-![Please fill out the poll](Figures/poll.jpeg){width=30%}
+![Please try it](Figures/poll.jpeg){width=30%}
 
 What does the following function do?
 
