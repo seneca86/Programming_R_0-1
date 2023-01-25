@@ -565,15 +565,15 @@ $$ \bf{1} = \begin{pmatrix}
 \end{pmatrix}
 $$
 ```{r}
-ones(n=2, m=3)
+ones(n=2, m=2)
 ```
-$$ \bf{0} = \begin{pmatrix}
-0 & 0 & 0 \\
-0 & 0 & 0 \\
+$$ \bf{1} = \begin{pmatrix}
+1 & 1 & 1 \\
+1 & 1 & 1 \\
 \end{pmatrix}
 $$
 ```{r}
-ones(n=2, m=2)
+ones(n=2, m=3)
 ```
 
 ## Indexing matrices
